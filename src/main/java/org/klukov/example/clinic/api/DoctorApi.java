@@ -8,6 +8,7 @@ import org.klukov.example.clinic.domain.service.DoctorService;
 import org.klukov.example.clinic.domain.service.VisitService;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +26,7 @@ public class DoctorApi {
         return VisitDto.fromDomain(confirmedVisit);
     }
 
+    @Transactional
     public List<VisitDto> findAllMyVisits(LocalDate from, LocalDate to, Long myId) {
         var visits = visitService.findVisits(
                 map(from, false),

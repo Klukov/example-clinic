@@ -1,4 +1,4 @@
-package org.klukov.example.clinic.api.controller
+package org.klukov.example.clinic
 
 import org.klukov.example.clinic.domain.VisitStatus
 import org.klukov.example.clinic.repository.dao.DoctorDao
