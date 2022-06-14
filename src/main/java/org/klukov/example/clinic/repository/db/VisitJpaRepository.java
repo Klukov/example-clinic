@@ -12,13 +12,13 @@ import java.util.List;
 @Repository
 public interface VisitJpaRepository extends JpaRepository<VisitDao, Long> {
 
-    List<VisitDao> findAllByDoctorIdAndFromAfterAndToBeforeAndStatusIn(
+    List<VisitDao> findAllByDoctorIdAndTimeFromAfterAndTimeToBeforeAndStatusIn(
             Long doctorId,
             LocalDateTime from,
             LocalDateTime to,
             Collection<VisitStatus> statuses);
 
-    List<VisitDao> findAllByFromAfterAndToBeforeAndStatusIn(
+    List<VisitDao> findAllByTimeFromAfterAndTimeToBeforeAndStatusIn(
             LocalDateTime from,
             LocalDateTime to,
             Collection<VisitStatus> statuses);

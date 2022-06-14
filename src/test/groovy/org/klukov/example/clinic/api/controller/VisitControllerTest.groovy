@@ -1,7 +1,9 @@
 package org.klukov.example.clinic.api.controller
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.klukov.example.clinic.DataGenerator
+import org.klukov.example.clinic.api.dto.DoctorDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -31,24 +33,35 @@ class VisitControllerTest extends Specification {
     @Autowired
     ObjectMapper objectMapper
 
-
     def "GetAvailableDoctors"() {
         given:
-        //dataGenerator.generateSampleData()
+        dataGenerator.generateSampleData()
 
         when:
-        def result = mockMvc.perform(get("/public/v1/visit/doctors")
-                .accept(MediaType.APPLICATION_JSON_VALUE))
+        def response = mockMvc.perform(
+                get("/public/v1/visit/doctors")
+                        .param("from", "2019-05-01T23:10")
+                        .param("to", "2023-05-01T23:10")
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString()
+        def result = objectMapper.readValue(response, new TypeReference<List<DoctorDto>>() {})
 
         then:
-        result != null
+        result.size() == 2
+        result[0].firstName == "Janusz"
+        result[0].lastName == "Pracz"
+        result[1].firstName == "Grazyna"
+        result[1].lastName == "Macz"
+
     }
 
-//    def "GetAvailableSlots"() {
-//
-//    }
-//
-//    def "BookVisit"() {
-//    }
+    def "GetAvailableSlots"() {
+
+    }
+
+    def "BookVisit"() {
+    }
 }

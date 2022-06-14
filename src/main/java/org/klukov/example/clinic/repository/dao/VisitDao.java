@@ -9,7 +9,10 @@ import org.klukov.example.clinic.domain.Visit;
 import org.klukov.example.clinic.domain.VisitStatus;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,19 +21,18 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
+@Table(name = "visits")
 public class VisitDao {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne
-//    private DoctorDao doctor;
-
-    private Long doctorId;
+    private Long doctorId; // todo: make Doctor relation
     private Long patientId; // todo: make Patient relation
 
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private LocalDateTime timeFrom;
+    private LocalDateTime timeTo;
 
     private VisitStatus status;
 
@@ -39,8 +41,8 @@ public class VisitDao {
                 .id(visit.getId())
                 .doctorId(visit.getDoctorId())
                 .patientId(visit.getPatientId())
-                .from(visit.getFrom())
-                .to(visit.getTo())
+                .timeFrom(visit.getFrom())
+                .timeTo(visit.getTo())
                 .status(visit.getVisitStatus())
                 .build();
     }
@@ -48,8 +50,8 @@ public class VisitDao {
     public Visit toDomain() {
         return Visit.builder()
                 .id(getId())
-                .from(getFrom())
-                .to(getTo())
+                .from(getTimeFrom())
+                .to(getTimeTo())
                 .doctorId(getDoctorId())
                 .patientId(getPatientId())
                 .build();

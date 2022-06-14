@@ -25,7 +25,7 @@ public class VisitRepository {
             Long doctorId,
             Collection<VisitStatus> visitStatuses
     ) {
-        return visitJpaRepository.findAllByDoctorIdAndFromAfterAndToBeforeAndStatusIn(
+        return visitJpaRepository.findAllByDoctorIdAndTimeFromAfterAndTimeToBeforeAndStatusIn(
                         doctorId, from, to, visitStatuses).stream()
                 .map(VisitDao::toDomain)
                 .collect(Collectors.toList());
@@ -36,7 +36,7 @@ public class VisitRepository {
             LocalDateTime to,
             Collection<VisitStatus> visitStatuses
     ) {
-        return visitJpaRepository.findAllByFromAfterAndToBeforeAndStatusIn(
+        return visitJpaRepository.findAllByTimeFromAfterAndTimeToBeforeAndStatusIn(
                         from, to, visitStatuses).stream()
                 .map(VisitDao::toDomain)
                 .collect(Collectors.toList());

@@ -50,8 +50,8 @@ class DataGenerator {
         visitJpaRepository.save(
                 new VisitDao(
                         doctorId: doctorDao.id,
-                        from: from,
-                        to: from.plusHours(1),
+                        timeFrom: from,
+                        timeTo: from.plusHours(1),
                         status: VisitStatus.FREE
                 )
         )
