@@ -5,6 +5,10 @@ DOCTORS QUERY:
 http://localhost:8080/public/v1/visit/doctors?from=2019-05-01T23:10:01&to=2023-05-01T23:10:01
 
 
+RUN POSTGRES FOR APP:
+sudo docker run --name clinic-postgresql -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test123 -p 5432:5432 -d postgres
+
+
 
 TODO:
 1. ADD FLYWAY DEPENDENCY
