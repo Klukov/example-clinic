@@ -33,29 +33,51 @@ class VisitControllerTest extends Specification {
     @Autowired
     ObjectMapper objectMapper
 
-    def "GetAvailableDoctors"() {
+    def cleanup() {
+        dataGenerator.cleanup()
+    }
+
+    def "Should return only available doctors in specific time"() {
         given:
         dataGenerator.generateSampleData()
 
         when:
-        def response = mockMvc.perform(
+        def response = queryDoctors(queryFrom, queryTo)
+        def result = getDoctorList(response)
+
+        then:
+        result.size() == expectedDoctors.size()
+        (0..<expectedDoctors.size()).forEach(it ->
+                assertDoctorDto(result[it], expectedDoctors[it][0], expectedDoctors[it][1])
+        )
+
+        where:
+        queryFrom          | queryTo            || expectedDoctors
+        "2019-05-01T23:10" | "2023-05-01T23:10" || [["Grazyna", "Macz"], ["Janusz", "Pracz"], ["Nova", "Super"]]
+        "2022-02-03T11:10" | "2022-02-03T18:00" || [["Grazyna", "Macz"], ["Janusz", "Pracz"]]
+        "2022-02-04T12:00" | "2022-02-04T16:00" || [["Janusz", "Pracz"], ["Nova", "Super"]]
+    }
+
+    private void assertDoctorDto(DoctorDto doctorDto, firstName, lastName) {
+        assert doctorDto.id != null
+        assert doctorDto.firstName == firstName
+        assert doctorDto.lastName == lastName
+    }
+
+    private List<DoctorDto> getDoctorList(String response) {
+        objectMapper.readValue(response, new TypeReference<List<DoctorDto>>() {})
+    }
+
+    private String queryDoctors(String from, String to) {
+        mockMvc.perform(
                 get("/public/v1/visit/doctors")
-                        .param("from", "2019-05-01T23:10")
-                        .param("to", "2023-05-01T23:10")
+                        .param("from", from)
+                        .param("to", to)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
                 .getContentAsString()
-        def result = objectMapper.readValue(response, new TypeReference<List<DoctorDto>>() {})
-
-        then:
-        result.size() == 2
-        result[0].firstName == "Janusz"
-        result[0].lastName == "Pracz"
-        result[1].firstName == "Grazyna"
-        result[1].lastName == "Macz"
-
     }
 
     def "GetAvailableSlots"() {

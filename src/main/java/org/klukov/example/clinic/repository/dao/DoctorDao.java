@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Entity
 @AllArgsConstructor
@@ -29,11 +30,14 @@ public class DoctorDao {
     private String firstName;
     private String lastName;
 
+    private BigDecimal rating;
+
     public Doctor toDomain() {
         return Doctor.builder()
                 .id(getId())
                 .firstName(getFirstName())
                 .lastName(getLastName())
+                .rating(getRating())
                 .build();
     }
 }
