@@ -30,8 +30,8 @@ class DataGenerator {
     }
 
     def generateSampleData() {
-        def doctor1 = generateDoctor("Janusz", "Pracz", 40)
-        def doctor2 = generateDoctor("Grazyna", "Macz", 60)
+        def doctor1 = generateDoctor("Janusz", "Pracz", BigDecimal.valueOf(40L))
+        def doctor2 = generateDoctor("Grazyna", "Macz", BigDecimal.valueOf(60L))
         def doctor3 = generateDoctor("Nova", "Super", null)
 
         // DAY 1

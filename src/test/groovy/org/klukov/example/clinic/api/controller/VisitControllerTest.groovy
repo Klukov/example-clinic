@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.klukov.example.clinic.DataGenerator
 import org.klukov.example.clinic.api.dto.DoctorDto
+import org.klukov.example.clinic.api.dto.SlotDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -42,8 +43,7 @@ class VisitControllerTest extends Specification {
         dataGenerator.generateSampleData()
 
         when:
-        def response = queryDoctors(queryFrom, queryTo)
-        def result = getDoctorList(response)
+        def result = queryDoctors(queryFrom, queryTo)
 
         then:
         result.size() == expectedDoctors.size()
@@ -64,12 +64,8 @@ class VisitControllerTest extends Specification {
         assert doctorDto.lastName == lastName
     }
 
-    private List<DoctorDto> getDoctorList(String response) {
-        objectMapper.readValue(response, new TypeReference<List<DoctorDto>>() {})
-    }
-
-    private String queryDoctors(String from, String to) {
-        mockMvc.perform(
+    private List<DoctorDto> queryDoctors(String from, String to) {
+        def mockResponse = mockMvc.perform(
                 get("/public/v1/visit/doctors")
                         .param("from", from)
                         .param("to", to)
@@ -78,10 +74,48 @@ class VisitControllerTest extends Specification {
                 .andReturn()
                 .getResponse()
                 .getContentAsString()
+        objectMapper.readValue(mockResponse, new TypeReference<List<DoctorDto>>() {})
     }
 
-    def "GetAvailableSlots"() {
+    def "should return available visits for queried time and doctor"() {
+        given:
+        dataGenerator.generateSampleData()
 
+        when:
+        def doctors = queryDoctors(queryFrom, queryTo)
+        def doctorId = findDoctorId(doctors, queriedDoctorName[0], queriedDoctorName[1])
+        def result = queryVisits(queryFrom, queryTo, doctorId)
+
+        then:
+        result.size() == expectedNumberOfAvailableVisits
+
+        where:
+        queryFrom          | queryTo            | queriedDoctorName   || expectedNumberOfAvailableVisits
+        "2019-05-01T23:10" | "2023-05-01T23:10" | ["Janusz", "Pracz"] || 6
+    }
+
+    private Long findDoctorId(List<DoctorDto> doctors, String firstName, String lastName) {
+        doctors.stream()
+                .filter(Objects::nonNull)
+                .filter(doctor -> doctor.firstName == firstName)
+                .filter(doctor -> doctor.lastName == lastName)
+                .map(DoctorDto::getId)
+                .findFirst()
+                .get()
+    }
+
+    private List<SlotDto> queryVisits(String from, String to, Long doctorId) {
+        def mockResponse = mockMvc.perform(
+                get("/public/v1/visit/available")
+                        .param("from", from)
+                        .param("to", to)
+                        .param("doctor", String.valueOf(doctorId))
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString()
+        objectMapper.readValue(mockResponse, new TypeReference<List<SlotDto>>() {})
     }
 
     def "BookVisit"() {

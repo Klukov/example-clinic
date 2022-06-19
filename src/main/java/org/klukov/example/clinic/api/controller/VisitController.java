@@ -38,8 +38,8 @@ public class VisitController {
 
     @GetMapping("available")
     public List<SlotDto> getAvailableSlots(
-            @RequestParam("from") LocalDateTime from,
-            @RequestParam("to") LocalDateTime to,
+            @RequestParam("from") @DateTimeFormat(iso = DATE_TIME) LocalDateTime from,
+            @RequestParam("to") @DateTimeFormat(iso = DATE_TIME) LocalDateTime to,
             @RequestParam("doctor") Long doctorId
     ) {
         return visitApi.findAvailableSlots(from, to, doctorId);

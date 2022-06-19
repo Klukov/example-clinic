@@ -1,6 +1,7 @@
 package org.klukov.example.clinic.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.klukov.example.clinic.domain.Visit;
 import org.klukov.example.clinic.domain.VisitStatus;
 import org.klukov.example.clinic.repository.dao.VisitDao;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class VisitRepository {
 
     private final VisitJpaRepository visitJpaRepository;
@@ -25,6 +27,7 @@ public class VisitRepository {
             Long doctorId,
             Collection<VisitStatus> visitStatuses
     ) {
+        log.info("Visits query to db: {}, {}, {}, {}", from, to, doctorId, visitStatuses);
         return visitJpaRepository.findAllByDoctorIdAndTimeFromAfterAndTimeToBeforeAndStatusIn(
                         doctorId, from, to, visitStatuses).stream()
                 .map(VisitDao::toDomain)
@@ -36,6 +39,7 @@ public class VisitRepository {
             LocalDateTime to,
             Collection<VisitStatus> visitStatuses
     ) {
+        log.info("Visits query to db: {}, {}, {}", from, to, visitStatuses);
         return visitJpaRepository.findAllByTimeFromAfterAndTimeToBeforeAndStatusIn(
                         from, to, visitStatuses).stream()
                 .map(VisitDao::toDomain)
