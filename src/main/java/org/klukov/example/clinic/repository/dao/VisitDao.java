@@ -52,6 +52,7 @@ public class VisitDao {
                 .id(getId())
                 .from(getTimeFrom())
                 .to(getTimeTo())
+                .visitStatus(getStatus())
                 .doctorId(getDoctorId())
                 .patientId(getPatientId())
                 .build();

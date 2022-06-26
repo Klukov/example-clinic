@@ -30,7 +30,7 @@ public class VisitService {
 
     public Visit bookVisit(Long visitId, Patient patient) {
         var visitBuilder = visitRepository.findVisit(visitId)
-                .filter(visit -> visit.getVisitStatus() == VisitStatus.FREE)
+                .filter(visit -> VisitStatus.FREE.equals(visit.getVisitStatus()))
                 .map(Visit::toBuilder)
                 .orElseThrow(() -> new RuntimeException("Visit do not exists or is in the wrong status"));
         var createdPatient = patientRepository.save(patient);

@@ -27,11 +27,12 @@ public class VisitRepository {
             Long doctorId,
             Collection<VisitStatus> visitStatuses
     ) {
-        log.info("Visits query to db: {}, {}, {}, {}", from, to, doctorId, visitStatuses);
-        return visitJpaRepository.findAllByDoctorIdAndTimeFromAfterAndTimeToBeforeAndStatusIn(
-                        doctorId, from, to, visitStatuses).stream()
+        var result = visitJpaRepository.findAllVisits(
+                        from, to, visitStatuses, doctorId).stream()
                 .map(VisitDao::toDomain)
                 .collect(Collectors.toList());
+        log.debug("Visits query to db: {}, {}, {}, {}, with result: {}", from, to, doctorId, visitStatuses, result);
+        return result;
     }
 
     public List<Visit> findVisits(
@@ -39,11 +40,12 @@ public class VisitRepository {
             LocalDateTime to,
             Collection<VisitStatus> visitStatuses
     ) {
-        log.info("Visits query to db: {}, {}, {}", from, to, visitStatuses);
-        return visitJpaRepository.findAllByTimeFromAfterAndTimeToBeforeAndStatusIn(
-                        from, to, visitStatuses).stream()
+        var result = visitJpaRepository.findAllVisits(
+                        from, to, visitStatuses, null).stream()
                 .map(VisitDao::toDomain)
                 .collect(Collectors.toList());
+        log.debug("Visits query to db: {}, {}, {}, with result: {}", from, to, visitStatuses, result);
+        return result;
     }
 
     public Optional<Visit> findVisit(Long id) {

@@ -9,6 +9,7 @@ import org.klukov.example.clinic.repository.VisitRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class DoctorService {
             LocalDateTime from,
             LocalDateTime to
     ) {
-        var availableDoctorIds = visitRepository.findVisits(from, to, VisitStatus.all()).stream()
+        var availableDoctorIds = visitRepository.findVisits(from, to, List.of(VisitStatus.FREE)).stream()
                 .map(Visit::getDoctorId)
                 .collect(Collectors.toSet());
         return doctorRepository.findAllByIds(availableDoctorIds);

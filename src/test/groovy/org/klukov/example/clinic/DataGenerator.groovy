@@ -35,24 +35,24 @@ class DataGenerator {
         def doctor3 = generateDoctor("Nova", "Super", null)
 
         // DAY 1
-        generateFreeVisit(now().plusDays(1), doctor1)
-        generateFreeVisit(now().plusDays(1).plusHours(2), doctor1)
-        generateFreeVisit(now().plusDays(1).plusHours(1), doctor2)
-        generateFreeVisit(now().plusDays(1).plusHours(3), doctor2)
+        generateVisit(now().plusDays(1), doctor1)
+        generateVisit(now().plusDays(1).plusHours(1), doctor2, VisitStatus.OCCUPIED)
+        generateVisit(now().plusDays(1).plusHours(2), doctor1, VisitStatus.CONFIRMED)
+        generateVisit(now().plusDays(1).plusHours(3), doctor2)
 
         // DAY 2
-        generateFreeVisit(now().plusDays(2), doctor1)
-        generateFreeVisit(now().plusDays(2).plusHours(2), doctor1)
-        generateFreeVisit(now().plusDays(2).plusHours(1), doctor3) // new doctor
-        generateFreeVisit(now().plusDays(2).plusHours(3), doctor3) // new doctor
-        generateFreeVisit(now().plusDays(2).plusHours(4), doctor2)
-        generateFreeVisit(now().plusDays(2).plusHours(5), doctor2)
+        generateVisit(now().plusDays(2), doctor1, VisitStatus.OCCUPIED)
+        generateVisit(now().plusDays(2).plusHours(1), doctor3) // new doctor
+        generateVisit(now().plusDays(2).plusHours(2), doctor1, VisitStatus.CONFIRMED)
+        generateVisit(now().plusDays(2).plusHours(3), doctor3) // new doctor
+        generateVisit(now().plusDays(2).plusHours(4), doctor2, VisitStatus.CONFIRMED)
+        generateVisit(now().plusDays(2).plusHours(5), doctor2, VisitStatus.OCCUPIED)
 
         // DAY 3
-        generateFreeVisit(now().plusDays(3), doctor1)
-        generateFreeVisit(now().plusDays(3).plusHours(2), doctor1)
-        generateFreeVisit(now().plusDays(3).plusHours(1), doctor2)
-        generateFreeVisit(now().plusDays(3).plusHours(3), doctor2)
+        generateVisit(now().plusDays(3), doctor1, VisitStatus.CONFIRMED)
+        generateVisit(now().plusDays(3).plusHours(1), doctor2)
+        generateVisit(now().plusDays(3).plusHours(2), doctor1)
+        generateVisit(now().plusDays(3).plusHours(3), doctor2, VisitStatus.OCCUPIED)
     }
 
 
@@ -70,13 +70,13 @@ class DataGenerator {
         )
     }
 
-    VisitDao generateFreeVisit(LocalDateTime from, DoctorDao doctorDao) {
+    VisitDao generateVisit(LocalDateTime from, DoctorDao doctorDao, VisitStatus visitStatus = VisitStatus.FREE) {
         visitJpaRepository.save(
                 new VisitDao(
                         doctorId: doctorDao.id,
                         timeFrom: from,
                         timeTo: from.plusHours(1),
-                        status: VisitStatus.FREE
+                        status: visitStatus,
                 )
         )
     }
