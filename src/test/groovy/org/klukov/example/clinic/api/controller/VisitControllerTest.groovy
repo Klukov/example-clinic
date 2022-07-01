@@ -7,6 +7,9 @@ import org.klukov.example.clinic.DataGenerator
 import org.klukov.example.clinic.api.dto.DoctorDto
 import org.klukov.example.clinic.api.dto.PatientDto
 import org.klukov.example.clinic.api.dto.SlotDto
+import org.klukov.example.clinic.domain.Patient
+import org.klukov.example.clinic.repository.PatientRepository
+import org.klukov.example.clinic.repository.VisitRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -37,6 +40,12 @@ class VisitControllerTest extends Specification {
 
     @Autowired
     ObjectMapper objectMapper
+
+    @Autowired
+    VisitRepository visitRepository
+
+    @Autowired
+    PatientRepository patientRepository
 
     def cleanup() {
         dataGenerator.cleanup()
@@ -142,6 +151,9 @@ class VisitControllerTest extends Specification {
         bookVisitCommand(visitId, patientRequest)
 
         then:
+        def patientId = visitRepository.findVisit(visitId).get().getPatientId()
+        def patient = patientRepository.findById(patientId).get()
+        assertPatientData(patient, patientRequest)
         queryDoctors(queryFrom, queryTo).isEmpty()
         queryVisits(queryFrom, queryTo, doctorId).isEmpty()
 
@@ -165,5 +177,11 @@ class VisitControllerTest extends Specification {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patientDto)))
                 .andExpect(status().isOk())
+    }
+
+    void assertPatientData(Patient patient, PatientDto patientDto) {
+        assert patient.firstName == patientDto.firstName
+        assert patient.lastName == patientDto.lastName
+        assert patient.peselNumber == patientDto.peselNumber
     }
 }

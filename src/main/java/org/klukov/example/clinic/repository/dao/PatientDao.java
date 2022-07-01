@@ -28,12 +28,14 @@ public class PatientDao {
 
     private String firstName;
     private String lastName;
+    private String peselNumber;
 
     public static PatientDao fromDomain(Patient patient) {
         return PatientDao.builder()
                 .id(patient.getId())
                 .firstName(patient.getFirstName())
                 .lastName(patient.getLastName())
+                .peselNumber(patient.getPeselNumber())
                 .build();
     }
 
@@ -42,6 +44,7 @@ public class PatientDao {
                 .id(getId())
                 .firstName(getFirstName())
                 .lastName(getLastName())
+                .peselNumber(getPeselNumber())
                 .build();
     }
 
