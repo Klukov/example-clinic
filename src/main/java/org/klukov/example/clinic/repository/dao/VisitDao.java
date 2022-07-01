@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.klukov.example.clinic.domain.Visit;
 import org.klukov.example.clinic.domain.VisitStatus;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,12 +29,16 @@ public class VisitDao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long doctorId; // todo: make Doctor relation
-    private Long patientId; // todo: make Patient relation
+    private Long doctorId;
+    private Long patientId;
 
+    @NonNull
     private LocalDateTime timeFrom;
+
+    @NonNull
     private LocalDateTime timeTo;
 
+    @NonNull
     private VisitStatus status;
 
     public static VisitDao fromDomain(Visit visit) {
