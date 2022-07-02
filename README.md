@@ -14,6 +14,8 @@ TODO:
 3. ADD INITIAL MIGRATION SCRIPT
 4. ADD SPRING SECURITY
 
+<br />
+
 PLANNED REFACTORS:
 
 0. INITIAL VERSION - application is splitter between DTO, Domain and DAO (DB)
