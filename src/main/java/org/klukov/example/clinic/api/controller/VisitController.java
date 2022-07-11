@@ -6,6 +6,7 @@ import org.klukov.example.clinic.api.dto.BookVisitDto;
 import org.klukov.example.clinic.api.dto.DoctorDto;
 import org.klukov.example.clinic.api.dto.SlotDto;
 import org.klukov.example.clinic.api.dto.VisitDto;
+import org.klukov.example.clinic.domain.DoctorSpecialization;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +32,10 @@ public class VisitController {
     @GetMapping("doctors")
     public List<DoctorDto> getAvailableDoctors(
             @RequestParam("from") @DateTimeFormat(iso = DATE_TIME) LocalDateTime from,
-            @RequestParam("to") @DateTimeFormat(iso = DATE_TIME) LocalDateTime to
+            @RequestParam("to") @DateTimeFormat(iso = DATE_TIME) LocalDateTime to,
+            @RequestParam("specialization") DoctorSpecialization doctorSpecialization
     ) {
-        return visitApi.findAvailableDoctors(from, to);
+        return visitApi.findAvailableDoctors(from, to, doctorSpecialization);
     }
 
     @GetMapping("available")

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.klukov.example.clinic.domain.Doctor;
+import org.klukov.example.clinic.domain.DoctorSpecialization;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,7 @@ public class DoctorDao {
     private String lastName;
 
     private BigDecimal rating;
+    private DoctorSpecialization specialization;
 
     public Doctor toDomain() {
         return Doctor.builder()
@@ -38,6 +40,7 @@ public class DoctorDao {
                 .firstName(getFirstName())
                 .lastName(getLastName())
                 .rating(getRating())
+                .specialization(getSpecialization())
                 .build();
     }
 }

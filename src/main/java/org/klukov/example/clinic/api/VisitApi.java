@@ -7,6 +7,7 @@ import org.klukov.example.clinic.api.dto.SlotDto;
 import org.klukov.example.clinic.api.dto.VisitDto;
 import org.klukov.example.clinic.domain.BookVisitCommand;
 import org.klukov.example.clinic.domain.Doctor;
+import org.klukov.example.clinic.domain.DoctorSpecialization;
 import org.klukov.example.clinic.domain.Visit;
 import org.klukov.example.clinic.domain.VisitStatus;
 import org.klukov.example.clinic.domain.service.DoctorService;
@@ -27,8 +28,8 @@ public class VisitApi {
     private final VisitService visitService;
 
     @Transactional(readOnly = true)
-    public List<DoctorDto> findAvailableDoctors(LocalDateTime from, LocalDateTime to) {
-        return doctorService.findAllAvailableDoctors(from, to).stream()
+    public List<DoctorDto> findAvailableDoctors(LocalDateTime from, LocalDateTime to, DoctorSpecialization doctorSpecialization) {
+        return doctorService.findAllAvailableDoctors(from, to, doctorSpecialization).stream()
                 .sorted(Comparator.comparing(Doctor::getRating, Comparator.nullsLast(Comparator.reverseOrder())))
                 .map(DoctorDto::fromDomain)
                 .collect(Collectors.toList());

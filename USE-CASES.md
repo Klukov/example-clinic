@@ -1,8 +1,9 @@
 ## 1. MUST HAVE
 
 1. As **Public user** I want to query all available doctors with concrete specialization in specific time. <br />
-   **STATUS:** specialization have to be added. <br />
-   **EXAMPLE:** http://localhost:8080/public/v1/visit/doctors?from=2019-05-01T23:10:01&to=2023-05-01T23:10:01
+   **STATUS:** DONE <br />
+   **
+   EXAMPLE:** http://localhost:8080/public/v1/visit/doctors?from=2019-05-01T23:10:01&to=2023-05-01T23:10:01&specialization=DENTIST
 2. As **Public user** I want to query all available time slots for doctorId <br />
    **STATUS**: DONE <br />
    **EXAMPLE:** http://localhost:8080/public/v1/visit/available?from=2019-05-01T23:10:01&to=2023-05-01T23:10:01&doctor=1

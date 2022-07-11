@@ -15,4 +15,5 @@ public class Doctor {
     String firstName;
     String lastName;
     BigDecimal rating;
+    DoctorSpecialization specialization;
 }

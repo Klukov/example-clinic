@@ -1,13 +1,12 @@
 package org.klukov.example.clinic.api.controller
 
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
+
 import groovy.util.logging.Slf4j
 import org.klukov.example.clinic.DataGenerator
+import org.klukov.example.clinic.VisitRestApi
 import org.klukov.example.clinic.api.dto.BookVisitDto
 import org.klukov.example.clinic.api.dto.DoctorDto
 import org.klukov.example.clinic.api.dto.PatientDto
-import org.klukov.example.clinic.api.dto.SlotDto
 import org.klukov.example.clinic.domain.Patient
 import org.klukov.example.clinic.repository.PatientRepository
 import org.klukov.example.clinic.repository.VisitRepository
@@ -15,15 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.web.WebAppConfiguration
-import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -37,10 +30,7 @@ class VisitControllerTest extends Specification {
     DataGenerator dataGenerator
 
     @Autowired
-    MockMvc mockMvc
-
-    @Autowired
-    ObjectMapper objectMapper
+    VisitRestApi visitRestApi
 
     @Autowired
     VisitRepository visitRepository
@@ -57,7 +47,7 @@ class VisitControllerTest extends Specification {
         dataGenerator.generateSampleData()
 
         when:
-        def result = queryDoctors(queryFrom, queryTo)
+        def result = visitRestApi.queryDoctors(queryFrom, queryTo)
 
         then:
         result.size() == expectedDoctors.size()
@@ -78,29 +68,14 @@ class VisitControllerTest extends Specification {
         assert doctorDto.lastName == lastName
     }
 
-    private List<DoctorDto> queryDoctors(String from, String to) {
-        def mockResponse = mockMvc.perform(
-                get("/public/v1/visit/doctors")
-                        .param("from", from)
-                        .param("to", to)
-                        .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString()
-        def result = objectMapper.readValue(mockResponse, new TypeReference<List<DoctorDto>>() {})
-        log.info("DOCTORS QUERY RESULT WITH PARAMS: {}, {}, with result: {}", from, to, result)
-        result
-    }
-
     def "should return available visits for queried time and doctor"() {
         given:
         dataGenerator.generateSampleData()
 
         when:
-        def doctors = queryDoctors(queryFrom, queryTo)
+        def doctors = visitRestApi.queryDoctors(queryFrom, queryTo)
         def doctorId = findDoctorId(doctors, queriedDoctorName[0], queriedDoctorName[1])
-        def result = queryVisits(queryFrom, queryTo, doctorId)
+        def result = visitRestApi.queryVisits(queryFrom, queryTo, doctorId)
 
         then:
         result.size() == expectedNumberOfAvailableVisits
@@ -122,39 +97,24 @@ class VisitControllerTest extends Specification {
                 .get()
     }
 
-    private List<SlotDto> queryVisits(String from, String to, Long doctorId) {
-        def mockResponse = mockMvc.perform(get("/public/v1/visit/available")
-                .param("from", from)
-                .param("to", to)
-                .param("doctor", String.valueOf(doctorId))
-                .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString()
-        def result = objectMapper.readValue(mockResponse, new TypeReference<List<SlotDto>>() {})
-        log.info("FREE VISITS QUERY RESULT WITH PARAMS: {}, {}, with result: {}", from, to, result)
-        result
-    }
-
     def "should visit be booked, when patient register"() {
         given:
         dataGenerator.generateSampleData()
 
         when:
-        def doctors = queryDoctors(queryFrom, queryTo)
+        def doctors = visitRestApi.queryDoctors(queryFrom, queryTo)
         def doctorId = findDoctorId(doctors, queriedDoctorName[0], queriedDoctorName[1])
-        def visitId = queryVisits(queryFrom, queryTo, doctorId)[0].id
+        def visitId = visitRestApi.queryVisits(queryFrom, queryTo, doctorId)[0].id
         def bookVisitRequest = prepareSamplePatientRequest()
-        bookVisitCommand(visitId, bookVisitRequest)
+        visitRestApi.bookVisitCommand(visitId, bookVisitRequest)
 
         then:
         def visit = visitRepository.findVisit(visitId).get()
         def patient = patientRepository.findById(visit.getPatientId()).get()
         assertPatientData(patient, bookVisitRequest.getPatient())
         visit.patientRemarks == bookVisitRequest.remarks
-        queryDoctors(queryFrom, queryTo).isEmpty()
-        queryVisits(queryFrom, queryTo, doctorId).isEmpty()
+        visitRestApi.queryDoctors(queryFrom, queryTo).isEmpty()
+        visitRestApi.queryVisits(queryFrom, queryTo, doctorId).isEmpty()
 
         where:
         queryFrom          | queryTo            | queriedDoctorName   || _
@@ -170,15 +130,6 @@ class VisitControllerTest extends Specification {
                         .build())
                 .remarks("Nothing to add")
                 .build()
-
-    }
-
-    private void bookVisitCommand(Long visitId, BookVisitDto bookVisitDto) {
-        mockMvc.perform(post("/public/v1/visit/$visitId/book")
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsString(bookVisitDto)))
-                .andExpect(status().isOk())
     }
 
     void assertPatientData(Patient patient, PatientDto patientDto) {

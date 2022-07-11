@@ -1,5 +1,6 @@
 package org.klukov.example.clinic
 
+import org.klukov.example.clinic.domain.DoctorSpecialization
 import org.klukov.example.clinic.domain.VisitStatus
 import org.klukov.example.clinic.repository.dao.DoctorDao
 import org.klukov.example.clinic.repository.dao.PatientDao
@@ -76,6 +77,7 @@ class DataGenerator {
                         firstName: firstName,
                         lastName: lastName,
                         rating: rating,
+                        specialization: DoctorSpecialization.DENTIST
                 )
         )
     }

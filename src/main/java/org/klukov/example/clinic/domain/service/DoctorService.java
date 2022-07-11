@@ -2,6 +2,7 @@ package org.klukov.example.clinic.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import org.klukov.example.clinic.domain.Doctor;
+import org.klukov.example.clinic.domain.DoctorSpecialization;
 import org.klukov.example.clinic.domain.Visit;
 import org.klukov.example.clinic.domain.VisitStatus;
 import org.klukov.example.clinic.repository.DoctorRepository;
@@ -34,11 +35,12 @@ public class DoctorService {
 
     public Set<Doctor> findAllAvailableDoctors(
             LocalDateTime from,
-            LocalDateTime to
+            LocalDateTime to,
+            DoctorSpecialization doctorSpecialization
     ) {
         var availableDoctorIds = visitRepository.findVisits(from, to, List.of(VisitStatus.FREE)).stream()
                 .map(Visit::getDoctorId)
                 .collect(Collectors.toSet());
-        return doctorRepository.findAllByIds(availableDoctorIds);
+        return doctorRepository.findAllByIdsAndSpecialization(availableDoctorIds, doctorSpecialization);
     }
 }

@@ -2,6 +2,7 @@ package org.klukov.example.clinic.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.klukov.example.clinic.domain.Doctor;
+import org.klukov.example.clinic.domain.DoctorSpecialization;
 import org.klukov.example.clinic.repository.dao.DoctorDao;
 import org.klukov.example.clinic.repository.db.DoctorJpaRepository;
 import org.springframework.stereotype.Component;
@@ -25,8 +26,8 @@ public class DoctorRepository {
         return doctorJpaRepository.existsById(id);
     }
 
-    public Set<Doctor> findAllByIds(Set<Long> doctorIds) {
-        return doctorJpaRepository.findAllById(doctorIds).stream()
+    public Set<Doctor> findAllByIdsAndSpecialization(Set<Long> doctorIds, DoctorSpecialization doctorSpecialization) {
+        return doctorJpaRepository.findAllByIdInAndSpecialization(doctorIds, doctorSpecialization).stream()
                 .map(DoctorDao::toDomain)
                 .collect(Collectors.toSet());
     }

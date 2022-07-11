@@ -2,11 +2,9 @@ EXAMPLE PROJECT TO SHOW CLEANING APPROACH
 
 ALL ENDPOINTS ARE DESCRIBED IN [USE-CASES.md](USE-CASES.md) FILE
 
-DOCTORS QUERY:
-http://localhost:8080/public/v1/visit/doctors?from=2019-05-01T23:10:01&to=2023-05-01T23:10:01
-
-RUN POSTGRES FOR APP:
-sudo docker run --name clinic-postgresql -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test123 -p 5432:5432 -d postgres
+**RUN POSTGRES FOR APP:** <br />
+sudo docker run --name clinic-postgresql -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test123 -p 5432:5432 -d postgres:
+13.7
 
 TODO:
 
