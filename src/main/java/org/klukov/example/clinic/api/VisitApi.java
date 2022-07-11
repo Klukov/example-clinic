@@ -1,10 +1,11 @@
 package org.klukov.example.clinic.api;
 
 import lombok.RequiredArgsConstructor;
+import org.klukov.example.clinic.api.dto.BookVisitDto;
 import org.klukov.example.clinic.api.dto.DoctorDto;
-import org.klukov.example.clinic.api.dto.PatientDto;
 import org.klukov.example.clinic.api.dto.SlotDto;
 import org.klukov.example.clinic.api.dto.VisitDto;
+import org.klukov.example.clinic.domain.BookVisitCommand;
 import org.klukov.example.clinic.domain.Doctor;
 import org.klukov.example.clinic.domain.Visit;
 import org.klukov.example.clinic.domain.VisitStatus;
@@ -42,7 +43,12 @@ public class VisitApi {
     }
 
     @Transactional
-    public VisitDto bookVisit(Long visitId, PatientDto patientDto) {
-        return VisitDto.fromDomain(visitService.bookVisit(visitId, patientDto.toDomain()));
+    public VisitDto bookVisit(Long visitId, BookVisitDto bookVisitDto) {
+        var bookVisitCommand = BookVisitCommand.builder()
+                .visitId(visitId)
+                .patient(bookVisitDto.getPatient().toDomain())
+                .patientRemarks(bookVisitDto.getRemarks())
+                .build();
+        return VisitDto.fromDomain(visitService.bookVisit(bookVisitCommand));
     }
 }

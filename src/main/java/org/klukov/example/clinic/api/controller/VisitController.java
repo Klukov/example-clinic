@@ -2,8 +2,8 @@ package org.klukov.example.clinic.api.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.klukov.example.clinic.api.VisitApi;
+import org.klukov.example.clinic.api.dto.BookVisitDto;
 import org.klukov.example.clinic.api.dto.DoctorDto;
-import org.klukov.example.clinic.api.dto.PatientDto;
 import org.klukov.example.clinic.api.dto.SlotDto;
 import org.klukov.example.clinic.api.dto.VisitDto;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,9 +48,9 @@ public class VisitController {
     @PostMapping("{id}/book")
     public VisitDto bookVisit(
             @PathVariable("id") Long visitId,
-            @Validated @RequestBody PatientDto patientDto
+            @Validated @RequestBody BookVisitDto bookVisitDto
     ) {
-        return visitApi.bookVisit(visitId, patientDto);
+        return visitApi.bookVisit(visitId, bookVisitDto);
     }
 
 }

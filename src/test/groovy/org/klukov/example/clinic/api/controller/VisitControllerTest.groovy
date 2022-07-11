@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.util.logging.Slf4j
 import org.klukov.example.clinic.DataGenerator
+import org.klukov.example.clinic.api.dto.BookVisitDto
 import org.klukov.example.clinic.api.dto.DoctorDto
 import org.klukov.example.clinic.api.dto.PatientDto
 import org.klukov.example.clinic.api.dto.SlotDto
@@ -60,9 +61,7 @@ class VisitControllerTest extends Specification {
 
         then:
         result.size() == expectedDoctors.size()
-        (0..<expectedDoctors.size()).forEach(it ->
-                assertDoctorDto(result[it], expectedDoctors[it][0], expectedDoctors[it][1])
-        )
+        (0..<expectedDoctors.size()).forEach(it -> assertDoctorDto(result[it], expectedDoctors[it][0], expectedDoctors[it][1]))
 
         where:
         queryFrom          | queryTo            || expectedDoctors
@@ -124,12 +123,11 @@ class VisitControllerTest extends Specification {
     }
 
     private List<SlotDto> queryVisits(String from, String to, Long doctorId) {
-        def mockResponse = mockMvc.perform(
-                get("/public/v1/visit/available")
-                        .param("from", from)
-                        .param("to", to)
-                        .param("doctor", String.valueOf(doctorId))
-                        .accept(MediaType.APPLICATION_JSON_VALUE))
+        def mockResponse = mockMvc.perform(get("/public/v1/visit/available")
+                .param("from", from)
+                .param("to", to)
+                .param("doctor", String.valueOf(doctorId))
+                .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -147,13 +145,14 @@ class VisitControllerTest extends Specification {
         def doctors = queryDoctors(queryFrom, queryTo)
         def doctorId = findDoctorId(doctors, queriedDoctorName[0], queriedDoctorName[1])
         def visitId = queryVisits(queryFrom, queryTo, doctorId)[0].id
-        def patientRequest = prepareSamplePatientRequest()
-        bookVisitCommand(visitId, patientRequest)
+        def bookVisitRequest = prepareSamplePatientRequest()
+        bookVisitCommand(visitId, bookVisitRequest)
 
         then:
-        def patientId = visitRepository.findVisit(visitId).get().getPatientId()
-        def patient = patientRepository.findById(patientId).get()
-        assertPatientData(patient, patientRequest)
+        def visit = visitRepository.findVisit(visitId).get()
+        def patient = patientRepository.findById(visit.getPatientId()).get()
+        assertPatientData(patient, bookVisitRequest.getPatient())
+        visit.patientRemarks == bookVisitRequest.remarks
         queryDoctors(queryFrom, queryTo).isEmpty()
         queryVisits(queryFrom, queryTo, doctorId).isEmpty()
 
@@ -162,20 +161,23 @@ class VisitControllerTest extends Specification {
         "2022-02-05T13:00" | "2022-02-05T14:00" | ["Grazyna", "Macz"] || _
     }
 
-    private PatientDto prepareSamplePatientRequest() {
-        PatientDto.builder()
-                .firstName("Ksionze")
-                .lastName("Kebaba")
-                .peselNumber("12345678910")
+    private BookVisitDto prepareSamplePatientRequest() {
+        BookVisitDto.builder()
+                .patient(PatientDto.builder()
+                        .firstName("Ksionze")
+                        .lastName("Kebaba")
+                        .peselNumber("12345678910")
+                        .build())
+                .remarks("Nothing to add")
                 .build()
+
     }
 
-    private void bookVisitCommand(Long visitId, PatientDto patientDto) {
-        mockMvc.perform(
-                post("/public/v1/visit/$visitId/book")
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(patientDto)))
+    private void bookVisitCommand(Long visitId, BookVisitDto bookVisitDto) {
+        mockMvc.perform(post("/public/v1/visit/$visitId/book")
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(bookVisitDto)))
                 .andExpect(status().isOk())
     }
 

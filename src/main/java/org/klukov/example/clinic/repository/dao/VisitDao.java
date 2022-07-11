@@ -41,6 +41,8 @@ public class VisitDao {
     @NonNull
     private VisitStatus status;
 
+    private String patientRemarks;
+
     public static VisitDao fromDomain(Visit visit) {
         return VisitDao.builder()
                 .id(visit.getId())
@@ -49,6 +51,7 @@ public class VisitDao {
                 .timeFrom(visit.getFrom())
                 .timeTo(visit.getTo())
                 .status(visit.getVisitStatus())
+                .patientRemarks(visit.getPatientRemarks())
                 .build();
     }
 
@@ -60,6 +63,7 @@ public class VisitDao {
                 .visitStatus(getStatus())
                 .doctorId(getDoctorId())
                 .patientId(getPatientId())
+                .patientRemarks(getPatientRemarks())
                 .build();
     }
 }
