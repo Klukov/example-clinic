@@ -18,7 +18,8 @@ public interface VisitJpaRepository extends JpaRepository<VisitDao, Long> {
             "WHERE visit.timeFrom >= :from " +
             "AND visit.timeFrom < :to " +
             "AND visit.status in :statuses " +
-            "AND (:doctorId IS NULL OR visit.doctorId = :doctorId)")
+            "AND (:doctorId IS NULL OR visit.doctorId = :doctorId)" +
+            "ORDER BY visit.timeFrom")
     List<VisitDao> findAllVisits(
             @Param("from") LocalDateTime from,
             @Param("to") LocalDateTime to,

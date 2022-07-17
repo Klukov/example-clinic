@@ -32,38 +32,68 @@ class DataGenerator {
     }
 
     def generateSampleData() {
-        def doctor1 = generateDoctor("Janusz", "Pracz", BigDecimal.valueOf(40L))
-        def doctor2 = generateDoctor("Grazyna", "Macz", BigDecimal.valueOf(60L))
-        def doctor3 = generateDoctor("Nova", "Super", null)
+        def doctors = generateDoctors()
+        def doctorNameMap = doctors
+                .collectEntries { [it.firstName + " " + it.lastName, it] } as Map<String, DoctorDao>
+        def doctorIdMap = doctors.collectEntries { [it.id, it] } as Map<Long, DoctorDao>
 
-        def patient1 = generatePatient("Aaaa", "Bbbbb", "11111111111")
-        def patient2 = generatePatient("Cccc", "Ddddd", "22222222222")
-        def patient3 = generatePatient("Eeee", "Fffff", "33333333333")
-        def patient4 = generatePatient("Gggg", "Hhhhh", "44444444444")
-        def patient5 = generatePatient("Iiii", "Jjjjj", "55555555555")
-        def patient6 = generatePatient("Kkkk", "Lllll", "66666666666")
-        def patient7 = generatePatient("Mmmm", "Nnnnn", "77777777777")
-        def patient8 = generatePatient("Oooo", "Ppppp", "88888888888")
+        def patients = generatePatients()
+        def patientMap = patients.collectEntries { [it.id, it] } as Map<Long, PatientDao>
 
-        // DAY 1
-        generateVisit(now().plusDays(1), doctor1)
-        generateVisit(now().plusDays(1).plusHours(1), doctor2, VisitStatus.OCCUPIED, patient1)
-        generateVisit(now().plusDays(1).plusHours(2), doctor1, VisitStatus.CONFIRMED, patient2)
-        generateVisit(now().plusDays(1).plusHours(3), doctor2)
+        def visitList = generateVisits(doctors, patients)
+        def visitMap = visitList.collectEntries { [it.id, it] } as Map<Long, VisitDao>
 
-        // DAY 2
-        generateVisit(now().plusDays(2), doctor1, VisitStatus.OCCUPIED, patient3)
-        generateVisit(now().plusDays(2).plusHours(1), doctor3) // new doctor
-        generateVisit(now().plusDays(2).plusHours(2), doctor1, VisitStatus.CONFIRMED, patient4)
-        generateVisit(now().plusDays(2).plusHours(3), doctor3) // new doctor
-        generateVisit(now().plusDays(2).plusHours(4), doctor2, VisitStatus.CONFIRMED, patient5)
-        generateVisit(now().plusDays(2).plusHours(5), doctor2, VisitStatus.OCCUPIED, patient6)
+        return [
+                "doctorsById"  : doctorIdMap,
+                "doctorsByName": doctorNameMap,
+                "patientsById" : patientMap,
+                "visitsById"   : visitMap,
+        ]
+    }
 
-        // DAY 3
-        generateVisit(now().plusDays(3), doctor1, VisitStatus.CONFIRMED, patient7)
-        generateVisit(now().plusDays(3).plusHours(1), doctor2)
-        generateVisit(now().plusDays(3).plusHours(2), doctor1)
-        generateVisit(now().plusDays(3).plusHours(3), doctor2, VisitStatus.OCCUPIED, patient8)
+    private List<VisitDao> generateVisits(List<DoctorDao> doctors, List<PatientDao> patients) {
+        [
+                // DAY 1
+                generateVisit(now().plusDays(1), doctors[0]),
+                generateVisit(now().plusDays(1).plusHours(1), doctors[1], VisitStatus.OCCUPIED, patients[0]),
+                generateVisit(now().plusDays(1).plusHours(2), doctors[0], VisitStatus.CONFIRMED, patients[1]),
+                generateVisit(now().plusDays(1).plusHours(3), doctors[1]),
+
+                // DAY 2
+                generateVisit(now().plusDays(2), doctors[0], VisitStatus.OCCUPIED, patients[2]),
+                generateVisit(now().plusDays(2).plusHours(1), doctors[2]), // new doctor
+                generateVisit(now().plusDays(2).plusHours(2), doctors[0], VisitStatus.CONFIRMED, patients[3]),
+                generateVisit(now().plusDays(2).plusHours(3), doctors[2]), // new doctor
+                generateVisit(now().plusDays(2).plusHours(4), doctors[1], VisitStatus.CONFIRMED, patients[4]),
+                generateVisit(now().plusDays(2).plusHours(5), doctors[1], VisitStatus.OCCUPIED, patients[5]),
+
+                // DAY 3
+                generateVisit(now().plusDays(3), doctors[0], VisitStatus.CONFIRMED, patients[6]),
+                generateVisit(now().plusDays(3).plusHours(1), doctors[1]),
+                generateVisit(now().plusDays(3).plusHours(2), doctors[0]),
+                generateVisit(now().plusDays(3).plusHours(3), doctors[1], VisitStatus.OCCUPIED, patients[7]),
+        ]
+    }
+
+    private List<PatientDao> generatePatients() {
+        [
+                generatePatient("Aaaa", "Bbbbb", "11111111111"),
+                generatePatient("Cccc", "Ddddd", "22222222222"),
+                generatePatient("Eeee", "Fffff", "33333333333"),
+                generatePatient("Gggg", "Hhhhh", "44444444444"),
+                generatePatient("Iiii", "Jjjjj", "55555555555"),
+                generatePatient("Kkkk", "Lllll", "66666666666"),
+                generatePatient("Mmmm", "Nnnnn", "77777777777"),
+                generatePatient("Oooo", "Ppppp", "88888888888"),
+        ]
+    }
+
+    private List<DoctorDao> generateDoctors() {
+        [
+                generateDoctor("Janusz", "Pracz", BigDecimal.valueOf(40L)),
+                generateDoctor("Grazyna", "Macz", BigDecimal.valueOf(60L)),
+                generateDoctor("Nova", "Super", null),
+        ]
     }
 
 

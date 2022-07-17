@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,17 +20,6 @@ public class DoctorService {
 
     private final DoctorRepository doctorRepository;
     private final VisitRepository visitRepository;
-
-    public Visit confirmVisit(Long doctorId, Long visitId) {
-        if (!doctorRepository.existsById(doctorId)) throw new RuntimeException("Doctor does not exist");
-        var visit = visitRepository.findVisit(visitId)
-                .filter(v -> VisitStatus.OCCUPIED.equals(v.getVisitStatus()))
-                .filter(v -> Objects.equals(v.getDoctorId(), doctorId))
-                .map(Visit::toBuilder)
-                .orElseThrow(() -> new RuntimeException("visit do not exists or is in the wrong state"))
-                .visitStatus(VisitStatus.CONFIRMED);
-        return visitRepository.saveVisit(visit.build());
-    }
 
     public Set<Doctor> findAllAvailableDoctors(
             LocalDateTime from,

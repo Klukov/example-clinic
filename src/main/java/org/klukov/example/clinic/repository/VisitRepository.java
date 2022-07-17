@@ -56,8 +56,4 @@ public class VisitRepository {
     public Visit saveVisit(Visit visit) {
         return visitJpaRepository.save(VisitDao.fromDomain(visit)).toDomain();
     }
-
-    public boolean visitExists(Long id) {
-        return visitJpaRepository.existsById(id);
-    }
 }

@@ -2,6 +2,7 @@ package org.klukov.example.clinic.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import org.klukov.example.clinic.domain.BookVisitCommand;
+import org.klukov.example.clinic.domain.ConfirmVisitCommand;
 import org.klukov.example.clinic.domain.Visit;
 import org.klukov.example.clinic.domain.VisitStatus;
 import org.klukov.example.clinic.repository.PatientRepository;
@@ -40,5 +41,14 @@ public class VisitService {
                 .patientRemarks(bookVisitCommand.getPatientRemarks())
                 .build();
         return visitRepository.saveVisit(newVisit);
+    }
+
+    public Visit confirmVisit(ConfirmVisitCommand confirmVisitCommand) {
+        var visit = visitRepository.findVisit(confirmVisitCommand.getVisitId())
+                .filter(v -> VisitStatus.OCCUPIED.equals(v.getVisitStatus()))
+                .map(Visit::toBuilder)
+                .orElseThrow(() -> new RuntimeException("visit do not exists or is in the wrong state"))
+                .visitStatus(VisitStatus.CONFIRMED);
+        return visitRepository.saveVisit(visit.build());
     }
 }

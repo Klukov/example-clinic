@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.klukov.example.clinic.domain.Visit;
 import org.klukov.example.clinic.domain.VisitStatus;
 import org.springframework.lang.NonNull;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @Table(name = "visits")
+@ToString
 public class VisitDao {
 
     @Id

@@ -42,10 +42,11 @@ class VisitControllerTest extends Specification {
         dataGenerator.cleanup()
     }
 
-    def "Should return only available doctors in specific time"() {
-        given:
+    def setup() {
         dataGenerator.generateSampleData()
+    }
 
+    def "Should return only available doctors in specific time"() {
         when:
         def result = visitRestApi.queryDoctors(queryFrom, queryTo)
 
@@ -69,9 +70,6 @@ class VisitControllerTest extends Specification {
     }
 
     def "should return available visits for queried time and doctor"() {
-        given:
-        dataGenerator.generateSampleData()
-
         when:
         def doctors = visitRestApi.queryDoctors(queryFrom, queryTo)
         def doctorId = findDoctorId(doctors, queriedDoctorName[0], queriedDoctorName[1])
@@ -98,9 +96,6 @@ class VisitControllerTest extends Specification {
     }
 
     def "should visit be booked, when patient register"() {
-        given:
-        dataGenerator.generateSampleData()
-
         when:
         def doctors = visitRestApi.queryDoctors(queryFrom, queryTo)
         def doctorId = findDoctorId(doctors, queriedDoctorName[0], queriedDoctorName[1])
