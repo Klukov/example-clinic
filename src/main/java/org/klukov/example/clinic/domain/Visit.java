@@ -16,6 +16,6 @@ public class Visit {
     LocalDateTime to;
     Long doctorId;
     Long patientId;
-    VisitStatus visitStatus;
+    VisitStatus status;
     String patientRemarks;
 }

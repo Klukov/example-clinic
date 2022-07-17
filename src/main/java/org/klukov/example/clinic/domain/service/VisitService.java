@@ -5,6 +5,7 @@ import org.klukov.example.clinic.domain.BookVisitCommand;
 import org.klukov.example.clinic.domain.ConfirmVisitCommand;
 import org.klukov.example.clinic.domain.Visit;
 import org.klukov.example.clinic.domain.VisitStatus;
+import org.klukov.example.clinic.domain.exception.VisitRuntimeException;
 import org.klukov.example.clinic.repository.PatientRepository;
 import org.klukov.example.clinic.repository.VisitRepository;
 import org.springframework.stereotype.Component;
@@ -31,12 +32,12 @@ public class VisitService {
 
     public Visit bookVisit(BookVisitCommand bookVisitCommand) {
         var visitBuilder = visitRepository.findVisit(bookVisitCommand.getVisitId())
-                .filter(visit -> VisitStatus.FREE.equals(visit.getVisitStatus()))
+                .filter(visit -> VisitStatus.FREE.equals(visit.getStatus()))
                 .map(Visit::toBuilder)
-                .orElseThrow(() -> new RuntimeException("Visit do not exists or is in the wrong status"));
+                .orElseThrow(() -> new VisitRuntimeException("Visit do not exists or is in the wrong status"));
         var createdPatient = patientRepository.save(bookVisitCommand.getPatient());
         var newVisit = visitBuilder
-                .visitStatus(VisitStatus.OCCUPIED)
+                .status(VisitStatus.OCCUPIED)
                 .patientId(createdPatient.getId())
                 .patientRemarks(bookVisitCommand.getPatientRemarks())
                 .build();
@@ -45,10 +46,10 @@ public class VisitService {
 
     public Visit confirmVisit(ConfirmVisitCommand confirmVisitCommand) {
         var visit = visitRepository.findVisit(confirmVisitCommand.getVisitId())
-                .filter(v -> VisitStatus.OCCUPIED.equals(v.getVisitStatus()))
+                .filter(v -> VisitStatus.OCCUPIED.equals(v.getStatus()))
                 .map(Visit::toBuilder)
-                .orElseThrow(() -> new RuntimeException("visit do not exists or is in the wrong state"))
-                .visitStatus(VisitStatus.CONFIRMED);
+                .orElseThrow(() -> new VisitRuntimeException("visit do not exists or is in the wrong state"))
+                .status(VisitStatus.CONFIRMED);
         return visitRepository.saveVisit(visit.build());
     }
 }

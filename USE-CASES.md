@@ -10,32 +10,35 @@
    **STATUS:** add input validation, add phone and email <br />
    **EXAMPLE:** todo <br />
 4. As **Doctor** I want to see all my visits (in all statuses) in time specified by dates <br />
-   **STATUS:** tests are needed <br />
+   **STATUS:** DONE <br />
    **EXAMPLE:** todo <br />
-5. As **Doctor** I want to finalize visit, put final price and remarks <br />
+5. As **Receptionist** I want to find all visits in clinic and filter them by status <br />
    **STATUS:** todo <br />
    **EXAMPLE:** todo <br />
-6. As **Receptionist** I want to find all visits in clinic and filter them by status <br />
+6. As **Receptionist** I want to book a visit, because patient is calling a clinic <br />
    **STATUS:** todo <br />
    **EXAMPLE:** todo <br />
-7. As **Receptionist** I want to book a visit, because patient is calling a clinic <br />
-   **STATUS:** todo <br />
+7. As **Receptionist** I want to confirm visit for doctor, by calling patient and confirming with him the visit <br />
+   **STATUS:** tests in progress <br />
    **EXAMPLE:** todo <br />
-8. As **Receptionist** I want to confirm visit for doctor, by calling patient and confirming with him the visit <br />
-   **STATUS:** todo <br />
-   **EXAMPLE:** todo <br />
-9. As **Receptionist** I want to cancel visit for doctor, because called patient or doctor cannot be on the visit <br />
+8. As **Receptionist** I want to cancel visit for doctor, because called patient or doctor cannot be on the visit <br />
    **STATUS:** todo <br />
    **EXAMPLE:** todo <br />
 
 ## 2. GOOD TO HAVE:
 
-1. As **Public user** I want to get confirmation email/sms for my visit <br />
+1. As **Doctor** I want to finalize visit, put final price and remarks <br />
    **STATUS:** todo <br />
-2. System need to protect itself from harmful users by checking phone number and ip <br />
+   **EXAMPLE:** todo <br />
+2. As **Public user** I want to get confirmation email/sms for my visit <br />
    **STATUS:** todo <br />
-3. Deduplication of patients by pesel number <br />
+   **EXAMPLE:** todo <br />
+3. System need to protect itself from harmful users by checking phone number and ip <br />
    **STATUS:** todo <br />
+   **EXAMPLE:** todo <br />
+4. Deduplication of patients by pesel number <br />
+   **STATUS:** todo <br />
+   **EXAMPLE:** todo <br />
 
 ## 3. NICE TO HAVE
 

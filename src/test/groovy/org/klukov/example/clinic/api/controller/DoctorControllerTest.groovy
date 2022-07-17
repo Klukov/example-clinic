@@ -4,7 +4,7 @@ import groovy.util.logging.Slf4j
 import org.klukov.example.clinic.DataGenerator
 import org.klukov.example.clinic.DoctorRestApi
 import org.klukov.example.clinic.api.dto.VisitDto
-import org.klukov.example.clinic.repository.dao.VisitDao
+import org.klukov.example.clinic.domain.Visit
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -40,9 +40,9 @@ class DoctorControllerTest extends Specification {
         def doctor = data.doctorsByName[doctorName]
         def expectedVisits = data.visitsById.values()
                 .findAll { it.doctorId == doctor.id }
-                .findAll { it.timeFrom.isAfter(getStartOfDayOfDate(from)) }
-                .findAll { it.timeTo.isBefore(getStartOfDayOfDate(to).plusDays(1)) }
-                .sort { it.timeFrom }
+                .findAll { it.from.isAfter(getStartOfDayOfDate(from)) }
+                .findAll { it.to.isBefore(getStartOfDayOfDate(to).plusDays(1)) }
+                .sort { it.from }
 
         when:
         def result = doctorRestApi.queryDoctorVisits(from, to, doctor.id)
@@ -57,17 +57,17 @@ class DoctorControllerTest extends Specification {
         "2022-02-05" | "2022-02-05" | "Grazyna Macz" || _
     }
 
-    private void assertVisits(Collection<VisitDto> result, Collection<VisitDao> expected) {
+    private void assertVisits(Collection<VisitDto> result, Collection<Visit> expected) {
         assert result.size() == expected.size()
         (0..(result.size() - 1)).each {
             assertVisit(result[it], expected[it])
         }
     }
 
-    private void assertVisit(VisitDto result, VisitDao expected) {
+    private void assertVisit(VisitDto result, Visit expected) {
         assert result.id == expected.id
-        assert result.from == expected.timeFrom
-        assert result.to == expected.timeTo
+        assert result.from == expected.from
+        assert result.to == expected.to
         assert result.doctorId == expected.doctorId
         assert result.patientId == expected.patientId
         assert result.visitStatus == expected.status

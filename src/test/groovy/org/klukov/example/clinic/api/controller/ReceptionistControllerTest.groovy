@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.web.WebAppConfiguration
+import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -32,6 +33,9 @@ class ReceptionistControllerTest extends Specification {
     @Autowired
     VisitRepository visitRepository
 
+    @Autowired
+    MockMvc mockMvc
+
     def cleanup() {
         dataGenerator.cleanup()
     }
@@ -48,20 +52,19 @@ class ReceptionistControllerTest extends Specification {
         then:
         call.andExpect(status().isOk())
         def updatedVisit = visitRepository.findVisit(visit.id).get()
-        updatedVisit == visit.toBuilder().visitStatus(VisitStatus.CONFIRMED).build()
+        updatedVisit == visit.toBuilder().status(VisitStatus.CONFIRMED).build()
     }
 
     def "should exception be thrown if visit do not exists"() {
         given:
         def data = dataGenerator.generateSampleData()
-        def visit = data.visitsById.values().find { it.visitStatus == uncofirmableVisitStatus }
-
+        def visitId = data.visitsById.values().find { it.status == uncofirmableVisitStatus }.id
 
         when:
-        def call = receptionistRestApi.confirmVisit(visit.id)
+        def call = receptionistRestApi.confirmVisit(visitId)
 
         then:
-        def response = call.andExpect(status().is4xxClientError())
+        def response = call.andExpect(status().is5xxServerError())
 
         where:
         uncofirmableVisitStatus || _
@@ -75,11 +78,11 @@ class ReceptionistControllerTest extends Specification {
         def data = dataGenerator.generateSampleData()
         def maxVisitId = data.visitsById.values().collect { it.id }.max()
 
-
         when:
         def call = receptionistRestApi.confirmVisit(maxVisitId + 1)
 
         then:
-        def response = call.andExpect(status().is4xxClientError())
+        def response = call.andExpect(status().is5xxServerError())
+
     }
 }

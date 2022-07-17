@@ -27,7 +27,7 @@ public class VisitDto {
                 .to(visit.getTo())
                 .doctorId(visit.getDoctorId())
                 .patientId(visit.getPatientId())
-                .visitStatus(visit.getVisitStatus())
+                .visitStatus(visit.getStatus())
                 .build();
     }
 }

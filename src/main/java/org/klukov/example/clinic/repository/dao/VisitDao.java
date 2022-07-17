@@ -52,7 +52,7 @@ public class VisitDao {
                 .patientId(visit.getPatientId())
                 .timeFrom(visit.getFrom())
                 .timeTo(visit.getTo())
-                .status(visit.getVisitStatus())
+                .status(visit.getStatus())
                 .patientRemarks(visit.getPatientRemarks())
                 .build();
     }
@@ -62,7 +62,7 @@ public class VisitDao {
                 .id(getId())
                 .from(getTimeFrom())
                 .to(getTimeTo())
-                .visitStatus(getStatus())
+                .status(getStatus())
                 .doctorId(getDoctorId())
                 .patientId(getPatientId())
                 .patientRemarks(getPatientRemarks())
