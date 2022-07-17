@@ -54,5 +54,4 @@ public class VisitController {
     ) {
         return visitApi.bookVisit(visitId, bookVisitDto);
     }
-
 }

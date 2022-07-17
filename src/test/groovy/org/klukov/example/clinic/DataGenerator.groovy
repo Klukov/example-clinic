@@ -1,7 +1,6 @@
 package org.klukov.example.clinic
 
-import org.klukov.example.clinic.domain.DoctorSpecialization
-import org.klukov.example.clinic.domain.VisitStatus
+import org.klukov.example.clinic.domain.*
 import org.klukov.example.clinic.repository.dao.DoctorDao
 import org.klukov.example.clinic.repository.dao.PatientDao
 import org.klukov.example.clinic.repository.dao.VisitDao
@@ -35,13 +34,13 @@ class DataGenerator {
         def doctors = generateDoctors()
         def doctorNameMap = doctors
                 .collectEntries { [it.firstName + " " + it.lastName, it] } as Map<String, DoctorDao>
-        def doctorIdMap = doctors.collectEntries { [it.id, it] } as Map<Long, DoctorDao>
+        def doctorIdMap = doctors.collectEntries { [it.id, it] } as Map<Long, Doctor>
 
         def patients = generatePatients()
-        def patientMap = patients.collectEntries { [it.id, it] } as Map<Long, PatientDao>
+        def patientMap = patients.collectEntries { [it.id, it] } as Map<Long, Patient>
 
         def visitList = generateVisits(doctors, patients)
-        def visitMap = visitList.collectEntries { [it.id, it] } as Map<Long, VisitDao>
+        def visitMap = visitList.collectEntries { [it.id, it] } as Map<Long, Visit>
 
         return [
                 "doctorsById"  : doctorIdMap,
@@ -51,31 +50,31 @@ class DataGenerator {
         ]
     }
 
-    private List<VisitDao> generateVisits(List<DoctorDao> doctors, List<PatientDao> patients) {
+    private List<Visit> generateVisits(List<Doctor> doctors, List<Patient> patients) {
         [
                 // DAY 1
-                generateVisit(now().plusDays(1), doctors[0]),
-                generateVisit(now().plusDays(1).plusHours(1), doctors[1], VisitStatus.OCCUPIED, patients[0]),
-                generateVisit(now().plusDays(1).plusHours(2), doctors[0], VisitStatus.CONFIRMED, patients[1]),
-                generateVisit(now().plusDays(1).plusHours(3), doctors[1]),
+                generateVisit(now().plusDays(1), doctors[0].id),
+                generateVisit(now().plusDays(1).plusHours(1), doctors[1].id, VisitStatus.OCCUPIED, patients[0].id),
+                generateVisit(now().plusDays(1).plusHours(2), doctors[0].id, VisitStatus.CONFIRMED, patients[1].id),
+                generateVisit(now().plusDays(1).plusHours(3), doctors[1].id),
 
                 // DAY 2
-                generateVisit(now().plusDays(2), doctors[0], VisitStatus.OCCUPIED, patients[2]),
-                generateVisit(now().plusDays(2).plusHours(1), doctors[2]), // new doctor
-                generateVisit(now().plusDays(2).plusHours(2), doctors[0], VisitStatus.CONFIRMED, patients[3]),
-                generateVisit(now().plusDays(2).plusHours(3), doctors[2]), // new doctor
-                generateVisit(now().plusDays(2).plusHours(4), doctors[1], VisitStatus.CONFIRMED, patients[4]),
-                generateVisit(now().plusDays(2).plusHours(5), doctors[1], VisitStatus.OCCUPIED, patients[5]),
+                generateVisit(now().plusDays(2), doctors[0].id, VisitStatus.OCCUPIED, patients[2].id),
+                generateVisit(now().plusDays(2).plusHours(1), doctors[2].id), // new doctor
+                generateVisit(now().plusDays(2).plusHours(2), doctors[0].id, VisitStatus.CONFIRMED, patients[3].id),
+                generateVisit(now().plusDays(2).plusHours(3), doctors[2].id), // new doctor
+                generateVisit(now().plusDays(2).plusHours(4), doctors[1].id, VisitStatus.CONFIRMED, patients[4].id),
+                generateVisit(now().plusDays(2).plusHours(5), doctors[1].id, VisitStatus.OCCUPIED, patients[5].id),
 
                 // DAY 3
-                generateVisit(now().plusDays(3), doctors[0], VisitStatus.CONFIRMED, patients[6]),
-                generateVisit(now().plusDays(3).plusHours(1), doctors[1]),
-                generateVisit(now().plusDays(3).plusHours(2), doctors[0]),
-                generateVisit(now().plusDays(3).plusHours(3), doctors[1], VisitStatus.OCCUPIED, patients[7]),
+                generateVisit(now().plusDays(3), doctors[0].id, VisitStatus.CONFIRMED, patients[6].id),
+                generateVisit(now().plusDays(3).plusHours(1), doctors[1].id),
+                generateVisit(now().plusDays(3).plusHours(2), doctors[0].id),
+                generateVisit(now().plusDays(3).plusHours(3), doctors[1].id, VisitStatus.OCCUPIED, patients[7].id),
         ]
     }
 
-    private List<PatientDao> generatePatients() {
+    private List<Patient> generatePatients() {
         [
                 generatePatient("Aaaa", "Bbbbb", "11111111111"),
                 generatePatient("Cccc", "Ddddd", "22222222222"),
@@ -88,7 +87,7 @@ class DataGenerator {
         ]
     }
 
-    private List<DoctorDao> generateDoctors() {
+    private List<Doctor> generateDoctors() {
         [
                 generateDoctor("Janusz", "Pracz", BigDecimal.valueOf(40L)),
                 generateDoctor("Grazyna", "Macz", BigDecimal.valueOf(60L)),
@@ -101,7 +100,7 @@ class DataGenerator {
         LocalDateTime.of(2022, 2, 2, 12, 0, 0)
     }
 
-    private DoctorDao generateDoctor(String firstName, String lastName, BigDecimal rating) {
+    private Doctor generateDoctor(String firstName, String lastName, BigDecimal rating) {
         doctorJpaRepository.save(
                 new DoctorDao(
                         firstName: firstName,
@@ -109,33 +108,33 @@ class DataGenerator {
                         rating: rating,
                         specialization: DoctorSpecialization.DENTIST
                 )
-        )
+        ).toDomain()
     }
 
-    private VisitDao generateVisit(
+    private Visit generateVisit(
             LocalDateTime from,
-            DoctorDao doctorDao,
+            Long doctorId,
             VisitStatus visitStatus = VisitStatus.FREE,
-            PatientDao patientDao = null
+            Long patientId = null
     ) {
         visitJpaRepository.save(
                 new VisitDao(
-                        doctorId: doctorDao.id,
-                        patientId: patientDao == null ? null : patientDao.id,
+                        doctorId: doctorId,
+                        patientId: patientId,
                         timeFrom: from,
                         timeTo: from.plusHours(1),
                         status: visitStatus,
                 )
-        )
+        ).toDomain()
     }
 
-    private PatientDao generatePatient(String firstName, String lastName, String peselNumber) {
+    private Patient generatePatient(String firstName, String lastName, String peselNumber) {
         patientJpaRepository.save(
                 new PatientDao(
                         firstName: firstName,
                         lastName: lastName,
                         peselNumber: peselNumber,
                 )
-        )
+        ).toDomain()
     }
 }

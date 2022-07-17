@@ -6,14 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.ResultActions
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @Component
 @Slf4j
 class ReceptionistRestApi {
-
 
     @Autowired
     MockMvc mockMvc
@@ -21,10 +20,9 @@ class ReceptionistRestApi {
     @Autowired
     ObjectMapper objectMapper
 
-    void confirmVisit(Long visitId) {
+    ResultActions confirmVisit(Long visitId) {
         mockMvc.perform(
-                post("receptionist/v1/visit/$visitId/confirm")
+                post("/receptionist/v1/visit/$visitId/confirm")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
     }
 }
