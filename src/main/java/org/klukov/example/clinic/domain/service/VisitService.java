@@ -5,7 +5,7 @@ import org.klukov.example.clinic.domain.BookVisitCommand;
 import org.klukov.example.clinic.domain.ConfirmVisitCommand;
 import org.klukov.example.clinic.domain.Visit;
 import org.klukov.example.clinic.domain.VisitStatus;
-import org.klukov.example.clinic.domain.exception.VisitRuntimeException;
+import org.klukov.example.clinic.domain.exception.ClinicRuntimeException;
 import org.klukov.example.clinic.repository.PatientRepository;
 import org.klukov.example.clinic.repository.VisitRepository;
 import org.springframework.stereotype.Component;
@@ -34,7 +34,7 @@ public class VisitService {
         var visitBuilder = visitRepository.findVisit(bookVisitCommand.getVisitId())
                 .filter(visit -> VisitStatus.FREE.equals(visit.getStatus()))
                 .map(Visit::toBuilder)
-                .orElseThrow(() -> new VisitRuntimeException("Visit do not exists or is in the wrong status"));
+                .orElseThrow(() -> new ClinicRuntimeException("Visit do not exists or is in the wrong status"));
         var createdPatient = patientRepository.save(bookVisitCommand.getPatient());
         var newVisit = visitBuilder
                 .status(VisitStatus.OCCUPIED)
@@ -48,7 +48,7 @@ public class VisitService {
         var visit = visitRepository.findVisit(confirmVisitCommand.getVisitId())
                 .filter(v -> VisitStatus.OCCUPIED.equals(v.getStatus()))
                 .map(Visit::toBuilder)
-                .orElseThrow(() -> new VisitRuntimeException("visit do not exists or is in the wrong state"))
+                .orElseThrow(() -> new ClinicRuntimeException("visit do not exists or is in the wrong state"))
                 .status(VisitStatus.CONFIRMED);
         return visitRepository.saveVisit(visit.build());
     }

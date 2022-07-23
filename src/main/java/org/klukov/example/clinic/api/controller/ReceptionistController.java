@@ -3,8 +3,6 @@ package org.klukov.example.clinic.api.controller;
 import lombok.RequiredArgsConstructor;
 import org.klukov.example.clinic.api.ReceptionistApi;
 import org.klukov.example.clinic.api.dto.VisitDto;
-import org.klukov.example.clinic.domain.exception.VisitRuntimeException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +16,6 @@ public class ReceptionistController {
     private final ReceptionistApi receptionistApi;
 
     @PostMapping("visit/{id}/confirm")
-    @ExceptionHandler({VisitRuntimeException.class})
     public VisitDto confirmVisit(
             @PathVariable("id") Long visitId
     ) {
