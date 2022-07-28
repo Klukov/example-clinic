@@ -1,21 +1,8 @@
-EXAMPLE PROJECT TO SHOW CLEANING APPROACH
+# EXAMPLE PROJECT TO SHOW THE CLEANING APPROACH
 
 ALL ENDPOINTS ARE DESCRIBED IN [USE-CASES.md](USE-CASES.md) FILE
 
-**RUN POSTGRES FOR APP:** <br />
-sudo docker run --name clinic-postgresql -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test123 -p 5432:5432 -d postgres:
-13.7
-
-TODO:
-
-1. FINISH E2E TEST FOR BASIC FUNCTIONALITY
-2. ADD FLYWAY DEPENDENCY
-3. ADD INITIAL MIGRATION SCRIPT
-4. ADD SPRING SECURITY
-
-<br />
-
-REFACTORS:
+## REFACTORS:
 
 0. INITIAL VERSION ([branch v0](https://github.com/Klukov/example-clinic/tree/v0-initialVersion))- application is split
    between DTO, Domain and DAO (DB)
@@ -23,3 +10,26 @@ REFACTORS:
    thanks to [pawel-b](https://github.com/pawel-b) for split
 2. USE CASES - todo
 3. HEXAGON - todo
+
+## RUN APP LOCALLY:
+
+**POSTGRES:** <br />
+sudo docker run --name clinic-postgresql -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test123 -p 5432:5432 -d postgres:
+13.7
+
+## Next Steps:
+
+1. Configure Spring Exception Handlers
+2. Add validation to patient registration - finish USE CASES 1.3
+3. Finish visit confirmation - USE CASE 1.7
+4. Add example usage to USE CASE 1.4
+5. Implement USE CASE 1.5
+6. Implement USE CASE 1.6
+7. Implement USE CASE 1.8
+8. Decompose SMS and EMAIL visit notification
+
+## INFRASTRUCTURE TODO:
+
+1. ADD FLYWAY DEPENDENCY
+2. ADD INITIAL MIGRATION SCRIPT
+3. ADD SPRING SECURITY
