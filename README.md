@@ -28,7 +28,7 @@ sudo docker run --name clinic-postgresql -e POSTGRES_USER=test -e POSTGRES_PASSW
 7. Implement USE CASE 1.8
 8. Decompose SMS and EMAIL visit notification
 
-## INFRASTRUCTURE TODO:
+## Infrastructure TODO:
 
 1. ADD FLYWAY DEPENDENCY
 2. ADD INITIAL MIGRATION SCRIPT
