@@ -9,7 +9,6 @@ import lombok.Value;
 @Builder(toBuilder = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConfirmVisitCommand {
-
     Long visitId;
     Long receptionistId;
 }

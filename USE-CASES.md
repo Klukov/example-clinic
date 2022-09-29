@@ -33,10 +33,13 @@
 2. As **Public user** I want to get confirmation email/sms for my visit <br />
    **STATUS:** todo <br />
    **EXAMPLE:** todo <br />
-3. System need to protect itself from harmful users by checking phone number and ip <br />
+3. As **Patient** I want to get reminder about upcoming visit <br />
    **STATUS:** todo <br />
    **EXAMPLE:** todo <br />
-4. Deduplication of patients by pesel number <br />
+4. System need to protect itself from harmful users by checking phone number and ip <br />
+   **STATUS:** todo <br />
+   **EXAMPLE:** todo <br />
+5. Deduplication of patients by pesel number <br />
    **STATUS:** todo <br />
    **EXAMPLE:** todo <br />
 
