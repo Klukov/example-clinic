@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-@Table(name = "visits")
+@Table(name = "visit")
 @ToString
 class VisitDao {
 

@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.web.util.NestedServletException
 import spock.lang.Specification
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -64,8 +63,8 @@ class ReceptionistControllerTest extends Specification {
         def call = receptionistRestApi.confirmVisit(visitId)
 
         then:
-        thrown(NestedServletException.class)
-        //def response = call.andExpect(status().is5xxServerError()) // todo: should be 500 exception
+        thrown(Exception.class)
+        //def response = call.andExpect(status().is5xxServerError()) // todo: fix this after spring error handling implementation
 
         where:
         uncofirmableVisitStatus || _
@@ -82,7 +81,7 @@ class ReceptionistControllerTest extends Specification {
         def call = receptionistRestApi.confirmVisit(maxVisitId + 1)
 
         then:
-        thrown(NestedServletException.class)
-        //def response = call.andExpect(status().is5xxServerError())  // todo: should be 500 exception
+        thrown(Exception.class)
+        //def response = call.andExpect(status().is5xxServerError()) // todo: fix this after spring error handling implementation
     }
 }

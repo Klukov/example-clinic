@@ -2,8 +2,9 @@ package org.klukov.example.clinic.api.patient;
 
 import lombok.RequiredArgsConstructor;
 import org.klukov.example.clinic.domain.doctor.Doctor;
-import org.klukov.example.clinic.domain.doctor.DoctorService;
 import org.klukov.example.clinic.domain.doctor.DoctorSpecialization;
+import org.klukov.example.clinic.domain.doctor.in.AvailableDoctorsQuery;
+import org.klukov.example.clinic.domain.doctor.in.AvailableDoctorsUseCase;
 import org.klukov.example.clinic.domain.visit.BookVisitCommand;
 import org.klukov.example.clinic.domain.visit.Visit;
 import org.klukov.example.clinic.domain.visit.VisitService;
@@ -14,18 +15,24 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 class PatientPublicApi {
 
-    private final DoctorService doctorService;
+    private final AvailableDoctorsUseCase availableDoctorsUseCase;
     private final VisitService visitService;
 
     @Transactional(readOnly = true)
     public List<DoctorDto> findAvailableDoctors(LocalDateTime from, LocalDateTime to, DoctorSpecialization doctorSpecialization) {
-        return doctorService.findAllAvailableDoctors(from, to, doctorSpecialization).stream()
+        var availableDoctorsQuery = AvailableDoctorsQuery.builder()
+                .from(from)
+                .to(to)
+                .doctorSpecializations(Set.of(doctorSpecialization))
+                .build();
+        return availableDoctorsUseCase.findAll(availableDoctorsQuery).stream()
                 .sorted(Comparator.comparing(Doctor::getRating, Comparator.nullsLast(Comparator.reverseOrder())))
                 .map(DoctorDto::fromDomain)
                 .collect(Collectors.toList());

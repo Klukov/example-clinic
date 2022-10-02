@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Builder
-@Table(name = "patients")
+@Table(name = "patient")
 class PatientDao {
 
     @Id

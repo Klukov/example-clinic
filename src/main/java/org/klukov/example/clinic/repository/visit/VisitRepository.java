@@ -2,6 +2,8 @@ package org.klukov.example.clinic.repository.visit;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.klukov.example.clinic.domain.doctor.DoctorId;
+import org.klukov.example.clinic.domain.doctor.out.DoctorAvailabilityRepository;
 import org.klukov.example.clinic.domain.visit.Visit;
 import org.klukov.example.clinic.domain.visit.VisitStatus;
 import org.springframework.stereotype.Component;
@@ -10,12 +12,13 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class VisitRepository {
+public class VisitRepository implements DoctorAvailabilityRepository {
 
     private final VisitJpaRepository visitJpaRepository;
 
@@ -26,7 +29,8 @@ public class VisitRepository {
             Collection<VisitStatus> visitStatuses
     ) {
         var result = visitJpaRepository.findAllVisits(
-                        from, to, visitStatuses, doctorId).stream()
+                        from, to, visitStatuses, doctorId
+                ).stream()
                 .map(VisitDao::toDomain)
                 .collect(Collectors.toList());
         log.debug("Visits query to db: {}, {}, {}, {}, with result: {}", from, to, doctorId, visitStatuses, result);
@@ -53,5 +57,14 @@ public class VisitRepository {
 
     public Visit saveVisit(Visit visit) {
         return visitJpaRepository.save(VisitDao.fromDomain(visit)).toDomain();
+    }
+
+    @Override
+    public Set<DoctorId> findAllAvailableDoctors(LocalDateTime from, LocalDateTime to) {
+        return visitJpaRepository.findAllVisits(
+                        from, to, List.of(VisitStatus.FREE), null).stream()
+                .map(VisitDao::getDoctorId)
+                .map(DoctorId::of)
+                .collect(Collectors.toSet());
     }
 }
