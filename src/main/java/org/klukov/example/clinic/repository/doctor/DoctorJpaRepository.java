@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 interface DoctorJpaRepository extends JpaRepository<DoctorDao, Long> {
 
-    List<DoctorDao> findAllByIdInAndSpecialization(Collection<Long> ids, DoctorSpecialization doctorSpecialization);
+    List<DoctorDao> findAllByIdInAndSpecializationIn(
+            Collection<Long> ids,
+            Collection<DoctorSpecialization> doctorSpecializations);
 }

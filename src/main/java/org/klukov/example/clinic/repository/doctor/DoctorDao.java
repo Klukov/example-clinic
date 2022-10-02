@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Builder
-@Table(name = "doctors")
+@Table(name = "doctor")
 class DoctorDao {
 
     @Id
