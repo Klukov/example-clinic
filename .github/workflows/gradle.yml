@@ -1,4 +1,4 @@
-name: Java CI
+name: example-clinic gradle build
 
 on: [ push, pull_request ]
 
