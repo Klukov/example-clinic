@@ -5,8 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import org.klukov.example.clinic.domain.doctor.DoctorId;
+import org.klukov.example.clinic.domain.visit.PatientId;
 import org.klukov.example.clinic.domain.visit.Visit;
+import org.klukov.example.clinic.domain.visit.VisitId;
 import org.klukov.example.clinic.domain.visit.VisitStatus;
 import org.springframework.lang.NonNull;
 
@@ -22,9 +24,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
+@Builder(toBuilder = true)
 @Table(name = "visit")
-@ToString
 class VisitDao {
 
     @Id
@@ -46,26 +47,27 @@ class VisitDao {
     private String patientRemarks;
 
     public static VisitDao fromDomain(Visit visit) {
-        return VisitDao.builder()
-                .id(visit.getId())
-                .doctorId(visit.getDoctorId())
-                .patientId(visit.getPatientId())
+        var builder = VisitDao.builder()
+                .doctorId(visit.getDoctorId().getValue())
                 .timeFrom(visit.getFrom())
                 .timeTo(visit.getTo())
                 .status(visit.getStatus())
-                .patientRemarks(visit.getPatientRemarks())
-                .build();
+                .patientRemarks(visit.getPatientRemarks());
+        if (visit.getPatientId().isPresent()) {
+            builder.patientId(visit.getPatientId().get().getValue());
+        }
+        return builder.build();
     }
 
     public Visit toDomain() {
         return Visit.builder()
-                .id(getId())
-                .from(getTimeFrom())
-                .to(getTimeTo())
-                .status(getStatus())
-                .doctorId(getDoctorId())
-                .patientId(getPatientId())
-                .patientRemarks(getPatientRemarks())
+                .id(VisitId.of(id))
+                .from(timeFrom)
+                .to(timeTo)
+                .status(status)
+                .doctorId(DoctorId.of(doctorId))
+                .patientId(patientId == null ? null : PatientId.of(patientId))
+                .patientRemarks(patientRemarks)
                 .build();
     }
 }

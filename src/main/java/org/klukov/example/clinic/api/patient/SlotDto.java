@@ -18,10 +18,10 @@ class SlotDto {
 
     public static SlotDto fromDomain(Visit visit) {
         return SlotDto.builder()
-                .id(visit.getId())
+                .id(visit.getId().getValue())
                 .from(visit.getFrom())
                 .to(visit.getTo())
-                .doctorId(visit.getDoctorId())
+                .doctorId(visit.getDoctorId().getValue())
                 .build();
     }
 }

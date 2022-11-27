@@ -2,8 +2,9 @@ package org.klukov.example.clinic.api.receptionist
 
 import groovy.util.logging.Slf4j
 import org.klukov.example.clinic.DataGenerator
+import org.klukov.example.clinic.domain.visit.VisitId
 import org.klukov.example.clinic.domain.visit.VisitStatus
-import org.klukov.example.clinic.repository.visit.VisitRepository
+import org.klukov.example.clinic.domain.visit.out.VisitRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -44,13 +45,13 @@ class ReceptionistControllerTest extends Specification {
         def data = dataGenerator.generateSampleData()
         def visit = data.visitsById.values()[4]
 
-
         when:
-        def call = receptionistRestApi.confirmVisit(visit.id)
+        def call = receptionistRestApi.confirmVisit(visit.id.value)
 
         then:
         call.andExpect(status().isOk())
-        def updatedVisit = visitRepository.findVisit(visit.id).get()
+        def updatedVisit = visitRepository.findVisit(VisitId.of(visit.id.value)).get()
+        updatedVisit.status == VisitStatus.CONFIRMED
         updatedVisit == visit.toBuilder().status(VisitStatus.CONFIRMED).build()
     }
 
@@ -60,7 +61,7 @@ class ReceptionistControllerTest extends Specification {
         def visitId = data.visitsById.values().find { it.status == uncofirmableVisitStatus }.id
 
         when:
-        def call = receptionistRestApi.confirmVisit(visitId)
+        def call = receptionistRestApi.confirmVisit(visitId.value)
 
         then:
         thrown(Exception.class)
@@ -75,7 +76,7 @@ class ReceptionistControllerTest extends Specification {
     def "should exception be thrown if visit is in wrong status"() {
         given:
         def data = dataGenerator.generateSampleData()
-        def maxVisitId = data.visitsById.values().collect { it.id }.max()
+        def maxVisitId = data.visitsById.values().collect { it.id.value }.max()
 
         when:
         def call = receptionistRestApi.confirmVisit(maxVisitId + 1)

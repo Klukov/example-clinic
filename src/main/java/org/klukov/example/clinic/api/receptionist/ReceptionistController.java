@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.Min;
+
 @RestController
 @RequestMapping("receptionist/v1")
 @RequiredArgsConstructor
@@ -15,7 +17,7 @@ class ReceptionistController {
 
     @PostMapping("visit/{id}/confirm")
     public ReceptionistVisitDto confirmVisit(
-            @PathVariable("id") Long visitId
+            @PathVariable("id") @Min(0) long visitId
     ) {
         //todo: use authorization to check if user is receptionist
         return receptionistApi.confirmVisit(visitId);

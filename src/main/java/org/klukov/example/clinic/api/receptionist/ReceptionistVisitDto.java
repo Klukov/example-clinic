@@ -3,6 +3,7 @@ package org.klukov.example.clinic.api.receptionist;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
+import org.klukov.example.clinic.domain.visit.PatientId;
 import org.klukov.example.clinic.domain.visit.Visit;
 import org.klukov.example.clinic.domain.visit.VisitStatus;
 
@@ -22,11 +23,11 @@ class ReceptionistVisitDto {
 
     public static ReceptionistVisitDto fromDomain(Visit visit) {
         return ReceptionistVisitDto.builder()
-                .id(visit.getId())
+                .id(visit.getId().getValue())
                 .from(visit.getFrom())
                 .to(visit.getTo())
-                .doctorId(visit.getDoctorId())
-                .patientId(visit.getPatientId())
+                .doctorId(visit.getDoctorId().getValue())
+                .patientId(visit.getPatientId().map(PatientId::getValue).orElse(null))
                 .visitStatus(visit.getStatus())
                 .build();
     }

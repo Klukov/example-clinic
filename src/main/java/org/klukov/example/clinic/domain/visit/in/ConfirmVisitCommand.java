@@ -1,15 +1,15 @@
-package org.klukov.example.clinic.domain.visit;
+package org.klukov.example.clinic.domain.visit.in;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
+import org.klukov.example.clinic.domain.visit.VisitId;
 
 @Value
 @Builder(toBuilder = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class BookVisitCommand {
-    long visitId;
-    Patient patient;
-    String patientRemarks;
+public class ConfirmVisitCommand {
+    VisitId visitId;
+    Long receptionistId;
 }

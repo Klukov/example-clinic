@@ -4,12 +4,15 @@ ALL ENDPOINTS ARE DESCRIBED IN [USE-CASES.md](USE-CASES.md) FILE
 
 ## REFACTORS:
 
-0. INITIAL VERSION ([branch v0](https://github.com/Klukov/example-clinic/tree/v0-initialVersion))- application is split
+1. ~~INITIAL VERSION~~ ([branch v0](https://github.com/Klukov/example-clinic/tree/v0-initialVersion))- application is
+   split
    between DTO, Domain and DAO (DB)
-1. PACKAGE SCOPE ([commit](https://github.com/Klukov/example-clinic/commit/4fe9c00106b5b71378dd3ab660caff38f870f7a9)) -
+2. ~~PACKAGE
+   SCOPE~~ ([commit](https://github.com/Klukov/example-clinic/commit/4fe9c00106b5b71378dd3ab660caff38f870f7a9)) -
    thanks to [pawel-b](https://github.com/pawel-b) for split
-2. USE CASES - todo
-3. HEXAGON - todo
+3. USE CASES - todo
+4. SEPARATED READ MODEL - todo
+5. HEXAGON - todo
 
 ## RUN APP LOCALLY:
 

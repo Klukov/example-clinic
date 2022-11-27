@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.klukov.example.clinic.domain.visit.NewPatient;
 import org.klukov.example.clinic.domain.visit.Patient;
+import org.klukov.example.clinic.domain.visit.PatientId;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +20,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
+@Builder(toBuilder = true)
 @Table(name = "patient")
 class PatientDao {
 
@@ -30,9 +32,8 @@ class PatientDao {
     private String lastName;
     private String peselNumber;
 
-    public static PatientDao fromDomain(Patient patient) {
+    public static PatientDao fromDomain(NewPatient patient) {
         return PatientDao.builder()
-                .id(patient.getId())
                 .firstName(patient.getFirstName())
                 .lastName(patient.getLastName())
                 .peselNumber(patient.getPeselNumber())
@@ -41,7 +42,7 @@ class PatientDao {
 
     public Patient toDomain() {
         return Patient.builder()
-                .id(getId())
+                .id(PatientId.of(id))
                 .firstName(getFirstName())
                 .lastName(getLastName())
                 .peselNumber(getPeselNumber())
