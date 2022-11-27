@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
+@Builder(toBuilder = true)
 @Table(name = "doctor")
 class DoctorDao {
 

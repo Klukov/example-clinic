@@ -1,9 +1,11 @@
 package org.klukov.example.clinic.api.doctor;
 
 import lombok.RequiredArgsConstructor;
+import org.klukov.example.clinic.domain.doctor.DoctorId;
 import org.klukov.example.clinic.domain.visit.Visit;
-import org.klukov.example.clinic.domain.visit.VisitService;
 import org.klukov.example.clinic.domain.visit.VisitStatus;
+import org.klukov.example.clinic.domain.visit.in.AvailableVisitQuery;
+import org.klukov.example.clinic.domain.visit.in.AvailableVisitsUseCase;
 import org.klukov.example.clinic.utils.DateTimeUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,15 +19,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 class DoctorApi {
 
-    private final VisitService visitService;
+    private final AvailableVisitsUseCase availableVisitsUseCase;
 
     @Transactional(readOnly = true)
-    public List<DoctorVisitDto> findAllMyVisits(LocalDate from, LocalDate to, Long myId) {
-        var visits = visitService.findVisits(
-                from.atStartOfDay(),
-                DateTimeUtils.atEndOfDay(to),
-                myId,
-                VisitStatus.all());
+    public List<DoctorVisitDto> findAllMyVisits(LocalDate from, LocalDate to, long myId) {
+        var visits = availableVisitsUseCase.findVisits(
+                AvailableVisitQuery.builder()
+                        .from(from.atStartOfDay())
+                        .to(DateTimeUtils.atEndOfDay(to))
+                        .doctorId(DoctorId.of(myId))
+                        .statuses(VisitStatus.all())
+                        .build()
+        );
         return visits.stream()
                 .sorted(Comparator.comparing(Visit::getFrom))
                 .map(DoctorVisitDto::fromDomain)

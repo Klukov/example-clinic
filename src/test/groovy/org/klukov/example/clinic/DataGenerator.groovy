@@ -1,11 +1,9 @@
 package org.klukov.example.clinic
 
-
 import org.klukov.example.clinic.domain.doctor.Doctor
 import org.klukov.example.clinic.domain.visit.Patient
 import org.klukov.example.clinic.domain.visit.Visit
 import org.klukov.example.clinic.domain.visit.VisitStatus
-import org.klukov.example.clinic.repository.doctor.DoctorDao
 import org.klukov.example.clinic.repository.doctor.DoctorDataGenerator
 import org.klukov.example.clinic.repository.patient.PatientDataGenerator
 import org.klukov.example.clinic.repository.visit.VisitDataGenerator
@@ -35,7 +33,7 @@ class DataGenerator {
     def generateSampleData() {
         def doctors = generateDoctors()
         def doctorNameMap = doctors
-                .collectEntries { [it.firstName + " " + it.lastName, it] } as Map<String, DoctorDao>
+                .collectEntries { [it.firstName + " " + it.lastName, it] } as Map<String, Doctor>
         def doctorIdMap = doctors.collectEntries { [it.id, it] } as Map<Long, Doctor>
 
         def patients = generatePatients()
@@ -56,23 +54,23 @@ class DataGenerator {
         [
                 // DAY 1
                 visitDataGenerator.generateVisit(now().plusDays(1), doctors[0].id),
-                visitDataGenerator.generateVisit(now().plusDays(1).plusHours(1), doctors[1].id, VisitStatus.OCCUPIED, patients[0].id),
-                visitDataGenerator.generateVisit(now().plusDays(1).plusHours(2), doctors[0].id, VisitStatus.CONFIRMED, patients[1].id),
+                visitDataGenerator.generateVisit(now().plusDays(1).plusHours(1), doctors[1].id, VisitStatus.OCCUPIED, patients[0].id.value),
+                visitDataGenerator.generateVisit(now().plusDays(1).plusHours(2), doctors[0].id, VisitStatus.CONFIRMED, patients[1].id.value),
                 visitDataGenerator.generateVisit(now().plusDays(1).plusHours(3), doctors[1].id),
 
                 // DAY 2
-                visitDataGenerator.generateVisit(now().plusDays(2), doctors[0].id, VisitStatus.OCCUPIED, patients[2].id),
+                visitDataGenerator.generateVisit(now().plusDays(2), doctors[0].id, VisitStatus.OCCUPIED, patients[2].id.value),
                 visitDataGenerator.generateVisit(now().plusDays(2).plusHours(1), doctors[2].id), // new doctor
-                visitDataGenerator.generateVisit(now().plusDays(2).plusHours(2), doctors[0].id, VisitStatus.CONFIRMED, patients[3].id),
+                visitDataGenerator.generateVisit(now().plusDays(2).plusHours(2), doctors[0].id, VisitStatus.CONFIRMED, patients[3].id.value),
                 visitDataGenerator.generateVisit(now().plusDays(2).plusHours(3), doctors[2].id), // new doctor
-                visitDataGenerator.generateVisit(now().plusDays(2).plusHours(4), doctors[1].id, VisitStatus.CONFIRMED, patients[4].id),
-                visitDataGenerator.generateVisit(now().plusDays(2).plusHours(5), doctors[1].id, VisitStatus.OCCUPIED, patients[5].id),
+                visitDataGenerator.generateVisit(now().plusDays(2).plusHours(4), doctors[1].id, VisitStatus.CONFIRMED, patients[4].id.value),
+                visitDataGenerator.generateVisit(now().plusDays(2).plusHours(5), doctors[1].id, VisitStatus.OCCUPIED, patients[5].id.value),
 
                 // DAY 3
-                visitDataGenerator.generateVisit(now().plusDays(3), doctors[0].id, VisitStatus.CONFIRMED, patients[6].id),
+                visitDataGenerator.generateVisit(now().plusDays(3), doctors[0].id, VisitStatus.CONFIRMED, patients[6].id.value),
                 visitDataGenerator.generateVisit(now().plusDays(3).plusHours(1), doctors[1].id),
                 visitDataGenerator.generateVisit(now().plusDays(3).plusHours(2), doctors[0].id),
-                visitDataGenerator.generateVisit(now().plusDays(3).plusHours(3), doctors[1].id, VisitStatus.OCCUPIED, patients[7].id),
+                visitDataGenerator.generateVisit(now().plusDays(3).plusHours(3), doctors[1].id, VisitStatus.OCCUPIED, patients[7].id.value),
         ]
     }
 

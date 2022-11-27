@@ -37,7 +37,7 @@ class DoctorControllerTest extends Specification {
         def data = dataGenerator.generateSampleData()
         def doctor = data.doctorsByName[doctorName]
         def expectedVisits = data.visitsById.values()
-                .findAll { it.doctorId == doctor.id }
+                .findAll { it.doctorId.value == doctor.id }
                 .findAll { it.from.isAfter(getStartOfDayOfDate(from)) }
                 .findAll { it.to.isBefore(getStartOfDayOfDate(to).plusDays(1)) }
                 .sort { it.from }
@@ -63,11 +63,11 @@ class DoctorControllerTest extends Specification {
     }
 
     private void assertVisit(DoctorVisitDto result, Visit expected) {
-        assert result.id == expected.id
+        assert result.id == expected.id.value
         assert result.from == expected.from
         assert result.to == expected.to
-        assert result.doctorId == expected.doctorId
-        assert result.patientId == expected.patientId
+        assert result.doctorId == expected.doctorId.value
+        assert result.patientId == expected.patientId.map(e -> e.value).orElse(null)
         assert result.visitStatus == expected.status
     }
 

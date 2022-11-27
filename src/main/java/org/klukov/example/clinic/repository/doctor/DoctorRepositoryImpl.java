@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class DoctorRepositoryImpl implements DoctorRepository {
+class DoctorRepositoryImpl implements DoctorRepository {
 
     private final DoctorJpaRepository doctorJpaRepository;
 
     @Override
     public Set<Doctor> findDoctors(Collection<DoctorId> ids, Collection<DoctorSpecialization> doctorSpecializations) {
-        var daoIds = ids.stream().map(DoctorId::getId).collect(Collectors.toSet());
+        var daoIds = ids.stream().map(DoctorId::getValue).collect(Collectors.toSet());
         return doctorJpaRepository.findAllByIdInAndSpecializationIn(daoIds, doctorSpecializations).stream()
                 .map(DoctorDao::toDomain)
                 .collect(Collectors.toSet());

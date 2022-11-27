@@ -3,12 +3,14 @@ package org.klukov.example.clinic.domain.visit;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.Value;
 
 @Value
-@Builder(toBuilder = true)
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ConfirmVisitCommand {
-    Long visitId;
-    Long receptionistId;
+public class NewPatient {
+    @NonNull String firstName;
+    @NonNull String lastName;
+    @NonNull String peselNumber;
 }

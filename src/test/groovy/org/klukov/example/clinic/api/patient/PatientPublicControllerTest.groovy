@@ -3,8 +3,9 @@ package org.klukov.example.clinic.api.patient
 import groovy.util.logging.Slf4j
 import org.klukov.example.clinic.DataGenerator
 import org.klukov.example.clinic.domain.visit.Patient
-import org.klukov.example.clinic.repository.patient.PatientRepository
-import org.klukov.example.clinic.repository.visit.VisitRepository
+import org.klukov.example.clinic.domain.visit.VisitId
+import org.klukov.example.clinic.domain.visit.out.PatientRepository
+import org.klukov.example.clinic.domain.visit.out.VisitRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -99,8 +100,8 @@ class PatientPublicControllerTest extends Specification {
         visitRestApi.bookVisitCommand(visitId, bookVisitRequest)
 
         then:
-        def visit = visitRepository.findVisit(visitId).get()
-        def patient = patientRepository.findById(visit.getPatientId()).get()
+        def visit = visitRepository.findVisit(VisitId.of(visitId)).get()
+        def patient = patientRepository.findById(visit.getPatientId().get()).get()
         assertPatientData(patient, bookVisitRequest.getPatient())
         visit.patientRemarks == bookVisitRequest.remarks
         visitRestApi.queryDoctors(queryFrom, queryTo).isEmpty()

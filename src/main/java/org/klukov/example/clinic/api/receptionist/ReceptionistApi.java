@@ -1,8 +1,9 @@
 package org.klukov.example.clinic.api.receptionist;
 
 import lombok.RequiredArgsConstructor;
-import org.klukov.example.clinic.domain.visit.ConfirmVisitCommand;
-import org.klukov.example.clinic.domain.visit.VisitService;
+import org.klukov.example.clinic.domain.visit.VisitId;
+import org.klukov.example.clinic.domain.visit.in.ConfirmVisitCommand;
+import org.klukov.example.clinic.domain.visit.in.ConfirmVisitUseCase;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 class ReceptionistApi {
 
-    private final VisitService visitService;
+    private final ConfirmVisitUseCase confirmVisitUseCase;
 
     @Transactional
-    public ReceptionistVisitDto confirmVisit(Long visitId) {
+    public ReceptionistVisitDto confirmVisit(long visitId) {
         return ReceptionistVisitDto.fromDomain(
-                visitService.confirmVisit(
+                confirmVisitUseCase.confirmVisit(
                         ConfirmVisitCommand.builder()
-                                .visitId(visitId)
+                                .visitId(VisitId.of(visitId))
                                 .build()
                 ));
     }

@@ -3,6 +3,7 @@ package org.klukov.example.clinic.domain.doctor;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.Value;
 
 import java.math.BigDecimal;
@@ -12,8 +13,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Doctor {
     Long id;
-    String firstName;
-    String lastName;
+    @NonNull String firstName;
+    @NonNull String lastName;
+    @NonNull DoctorSpecialization specialization;
     BigDecimal rating;
-    DoctorSpecialization specialization;
 }
