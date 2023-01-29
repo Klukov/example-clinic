@@ -13,6 +13,8 @@ import org.klukov.example.clinic.domain.visit.VisitStatus;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,6 +44,7 @@ class VisitDao {
     private LocalDateTime timeTo;
 
     @NonNull
+    @Enumerated(EnumType.STRING)
     private VisitStatus status;
 
     private String patientRemarks;
