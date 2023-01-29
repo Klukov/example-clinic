@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @AllArgsConstructor
@@ -28,9 +29,9 @@ class PatientDao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
-    private String lastName;
-    private String peselNumber;
+    @NotNull private String firstName;
+    @NotNull private String lastName;
+    @NotNull private String peselNumber;
 
     public static PatientDao fromDomain(NewPatient patient) {
         return PatientDao.builder()

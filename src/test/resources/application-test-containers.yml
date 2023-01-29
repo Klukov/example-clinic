@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:13.7://localhost:5432/test-example-clinic
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+    password: test
+    username: test
+  jpa:
+    generate-ddl: false
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    baselineVersion: 0
+    baselineOnMigrate: true
+    locations:
+      - classpath:db/migration
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+      hibernate:
+        SQL: TRACE

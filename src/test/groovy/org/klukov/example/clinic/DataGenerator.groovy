@@ -9,6 +9,7 @@ import org.klukov.example.clinic.repository.patient.PatientDataGenerator
 import org.klukov.example.clinic.repository.visit.VisitDataGenerator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 import static org.klukov.example.clinic.TestSettings.now
 
@@ -30,6 +31,7 @@ class DataGenerator {
         visitDataGenerator.cleanup()
     }
 
+    @Transactional
     def generateSampleData() {
         def doctors = generateDoctors()
         def doctorNameMap = doctors

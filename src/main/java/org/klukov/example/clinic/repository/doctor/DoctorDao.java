@@ -9,6 +9,8 @@ import org.klukov.example.clinic.domain.doctor.Doctor;
 import org.klukov.example.clinic.domain.doctor.DoctorSpecialization;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,8 +32,9 @@ class DoctorDao {
 
     private String firstName;
     private String lastName;
-
     private BigDecimal rating;
+
+    @Enumerated(EnumType.STRING)
     private DoctorSpecialization specialization;
 
     public Doctor toDomain() {

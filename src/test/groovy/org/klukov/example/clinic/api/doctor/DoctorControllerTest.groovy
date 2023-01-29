@@ -1,25 +1,23 @@
 package org.klukov.example.clinic.api.doctor
 
-import groovy.util.logging.Slf4j
 import org.klukov.example.clinic.DataGenerator
 import org.klukov.example.clinic.domain.visit.Visit
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.web.WebAppConfiguration
+import org.testcontainers.spock.Testcontainers
 import spock.lang.Specification
 
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-@ActiveProfiles("test")
+@ActiveProfiles("test-containers")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @WebAppConfiguration
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Slf4j
+@Testcontainers
 class DoctorControllerTest extends Specification {
 
     @Autowired

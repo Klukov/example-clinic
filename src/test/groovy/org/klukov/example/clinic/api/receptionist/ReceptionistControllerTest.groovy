@@ -12,16 +12,16 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
+import org.testcontainers.spock.Testcontainers
 import spock.lang.Specification
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@ActiveProfiles("test")
+@ActiveProfiles("test-containers")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @WebAppConfiguration
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Slf4j
+@Testcontainers
 class ReceptionistControllerTest extends Specification {
 
     @Autowired

@@ -25,18 +25,21 @@ ALL ENDPOINTS ARE DESCRIBED IN [USE-CASES.md](USE-CASES.md) FILE
 * run psql in docker:  
   `docker exec -ti clinic-postgresql psql -U test -d example-clinic`
 
-## Next Steps:
-1. Configure Spring Exception Handlers
-2. Add and configure checkstyle or spotless
-3. Add validation to patient registration - finish USE CASES 1.3
-4. Finish visit confirmation - USE CASE 1.7
-5. Add example usage to USE CASE 1.4
-6. Implement USE CASE 1.5
-7. Implement USE CASE 1.6
-8. Implement USE CASE 1.8
-9. Decompose SMS and EMAIL visit notification
+## Functional next steps:
 
-## Infrastructure TODO:
-1. ADD LIQUIBASE DEPENDENCY
-2. ADD INITIAL MIGRATION SCRIPT
-3. ADD SPRING SECURITY
+1. Configure Spring Exception Handlers
+2. Add validation to patient registration - finish USE CASES 1.3
+3. Finish visit confirmation - USE CASE 1.7
+4. Add example usage to USE CASE 1.4
+5. Implement USE CASE 1.5
+6. Implement USE CASE 1.6
+7. Implement USE CASE 1.8
+8. Decompose SMS and EMAIL visit notification
+
+
+## Infrastructure / technical next steps:
+
+1. ~~ADD FLYWAY DEPENDENCY~~
+2. ~~ADD INITIAL MIGRATION SCRIPT~~
+3. ADD AND CONFIGURE SPOTLESS
+4. ADD SPRING SECURITY
