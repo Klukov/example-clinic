@@ -4,14 +4,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/example-clinic
     username: test
     password: test123
-  flyway:
-    enabled: true
-    baselineVersion: 0
-    baselineOnMigrate: true
-    user: test
-    password: test123
-    locations:
-      - classpath:db/migration
 logging:
   level:
     org:
