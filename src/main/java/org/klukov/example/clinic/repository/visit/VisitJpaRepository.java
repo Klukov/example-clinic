@@ -1,6 +1,6 @@
 package org.klukov.example.clinic.repository.visit;
 
-import org.klukov.example.clinic.domain.visit.VisitStatus;
+import org.klukov.example.clinic.domain.visit.model.VisitStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

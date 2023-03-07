@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
-import org.klukov.example.clinic.domain.doctor.DoctorId;
-import org.klukov.example.clinic.domain.visit.VisitStatus;
+import org.klukov.example.clinic.domain.doctor.model.DoctorId;
+import org.klukov.example.clinic.domain.visit.model.VisitStatus;
 
 import java.time.LocalDateTime;
 import java.util.Set;

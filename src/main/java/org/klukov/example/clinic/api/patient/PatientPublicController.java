@@ -1,7 +1,7 @@
 package org.klukov.example.clinic.api.patient;
 
 import lombok.RequiredArgsConstructor;
-import org.klukov.example.clinic.domain.doctor.DoctorSpecialization;
+import org.klukov.example.clinic.domain.doctor.model.DoctorSpecialization;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;

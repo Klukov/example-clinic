@@ -1,10 +1,10 @@
-package org.klukov.example.clinic.domain.visit;
+package org.klukov.example.clinic.domain.doctor.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;
 
 @Value
 @AllArgsConstructor(staticName = "of")
-public class VisitId {
-    long value;
+public class DoctorId {
+    Long value;
 }

@@ -1,9 +1,9 @@
 package org.klukov.example.clinic.repository.doctor;
 
 import lombok.RequiredArgsConstructor;
-import org.klukov.example.clinic.domain.doctor.Doctor;
-import org.klukov.example.clinic.domain.doctor.DoctorId;
-import org.klukov.example.clinic.domain.doctor.DoctorSpecialization;
+import org.klukov.example.clinic.domain.doctor.model.Doctor;
+import org.klukov.example.clinic.domain.doctor.model.DoctorId;
+import org.klukov.example.clinic.domain.doctor.model.DoctorSpecialization;
 import org.klukov.example.clinic.domain.doctor.out.DoctorRepository;
 import org.springframework.stereotype.Component;
 

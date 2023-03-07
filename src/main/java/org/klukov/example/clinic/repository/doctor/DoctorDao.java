@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.klukov.example.clinic.domain.doctor.Doctor;
-import org.klukov.example.clinic.domain.doctor.DoctorSpecialization;
+import org.klukov.example.clinic.domain.doctor.model.Doctor;
+import org.klukov.example.clinic.domain.doctor.model.DoctorSpecialization;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

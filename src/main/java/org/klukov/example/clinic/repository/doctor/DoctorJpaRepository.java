@@ -1,6 +1,6 @@
 package org.klukov.example.clinic.repository.doctor;
 
-import org.klukov.example.clinic.domain.doctor.DoctorSpecialization;
+import org.klukov.example.clinic.domain.doctor.model.DoctorSpecialization;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

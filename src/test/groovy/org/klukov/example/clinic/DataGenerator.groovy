@@ -1,9 +1,9 @@
 package org.klukov.example.clinic
 
-import org.klukov.example.clinic.domain.doctor.Doctor
-import org.klukov.example.clinic.domain.visit.Patient
-import org.klukov.example.clinic.domain.visit.Visit
-import org.klukov.example.clinic.domain.visit.VisitStatus
+import org.klukov.example.clinic.domain.doctor.model.Doctor
+import org.klukov.example.clinic.domain.visit.model.Patient
+import org.klukov.example.clinic.domain.visit.model.Visit
+import org.klukov.example.clinic.domain.visit.model.VisitStatus
 import org.klukov.example.clinic.repository.doctor.DoctorDataGenerator
 import org.klukov.example.clinic.repository.patient.PatientDataGenerator
 import org.klukov.example.clinic.repository.visit.VisitDataGenerator

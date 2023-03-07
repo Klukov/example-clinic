@@ -1,6 +1,6 @@
 package org.klukov.example.clinic.domain.visit.in;
 
-import org.klukov.example.clinic.domain.visit.Visit;
+import org.klukov.example.clinic.domain.visit.model.Visit;
 
 public interface ConfirmVisitUseCase {
 

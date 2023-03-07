@@ -1,12 +1,11 @@
 package org.klukov.example.clinic.api.receptionist
 
-import groovy.util.logging.Slf4j
+
 import org.klukov.example.clinic.DataGenerator
-import org.klukov.example.clinic.domain.visit.VisitId
-import org.klukov.example.clinic.domain.visit.VisitStatus
+import org.klukov.example.clinic.domain.visit.model.VisitId
+import org.klukov.example.clinic.domain.visit.model.VisitStatus
 import org.klukov.example.clinic.domain.visit.out.VisitRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles

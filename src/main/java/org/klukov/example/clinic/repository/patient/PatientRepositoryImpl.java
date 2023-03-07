@@ -2,9 +2,9 @@ package org.klukov.example.clinic.repository.patient;
 
 import lombok.RequiredArgsConstructor;
 import org.klukov.example.clinic.domain.exception.ClinicRuntimeException;
-import org.klukov.example.clinic.domain.visit.NewPatient;
-import org.klukov.example.clinic.domain.visit.Patient;
-import org.klukov.example.clinic.domain.visit.PatientId;
+import org.klukov.example.clinic.domain.visit.model.NewPatient;
+import org.klukov.example.clinic.domain.visit.model.Patient;
+import org.klukov.example.clinic.domain.visit.model.PatientId;
 import org.klukov.example.clinic.domain.visit.out.PatientRepository;
 import org.springframework.stereotype.Component;
 

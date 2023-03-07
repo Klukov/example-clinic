@@ -3,9 +3,9 @@ package org.klukov.example.clinic.api.patient;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
-import org.klukov.example.clinic.domain.visit.PatientId;
-import org.klukov.example.clinic.domain.visit.Visit;
-import org.klukov.example.clinic.domain.visit.VisitStatus;
+import org.klukov.example.clinic.domain.visit.model.PatientId;
+import org.klukov.example.clinic.domain.visit.model.Visit;
+import org.klukov.example.clinic.domain.visit.model.VisitStatus;
 
 import java.time.LocalDateTime;
 

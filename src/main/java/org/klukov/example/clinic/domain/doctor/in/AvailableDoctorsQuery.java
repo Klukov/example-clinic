@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
-import org.klukov.example.clinic.domain.doctor.DoctorSpecialization;
+import org.klukov.example.clinic.domain.doctor.model.DoctorSpecialization;
 
 import java.time.LocalDateTime;
 import java.util.Set;

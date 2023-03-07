@@ -3,6 +3,7 @@ package org.klukov.example.clinic.domain.doctor;
 import lombok.RequiredArgsConstructor;
 import org.klukov.example.clinic.domain.doctor.in.AvailableDoctorsQuery;
 import org.klukov.example.clinic.domain.doctor.in.AvailableDoctorsUseCase;
+import org.klukov.example.clinic.domain.doctor.model.Doctor;
 import org.klukov.example.clinic.domain.doctor.out.DoctorAvailabilityRepository;
 import org.klukov.example.clinic.domain.doctor.out.DoctorRepository;
 import org.springframework.stereotype.Service;

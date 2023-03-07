@@ -1,4 +1,4 @@
-package org.klukov.example.clinic.domain.visit;
+package org.klukov.example.clinic.domain.visit.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
-import org.klukov.example.clinic.domain.doctor.DoctorId;
+import org.klukov.example.clinic.domain.doctor.model.DoctorId;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

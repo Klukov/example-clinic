@@ -1,9 +1,9 @@
 package org.klukov.example.clinic.api.doctor;
 
 import lombok.RequiredArgsConstructor;
-import org.klukov.example.clinic.domain.doctor.DoctorId;
-import org.klukov.example.clinic.domain.visit.Visit;
-import org.klukov.example.clinic.domain.visit.VisitStatus;
+import org.klukov.example.clinic.domain.doctor.model.DoctorId;
+import org.klukov.example.clinic.domain.visit.model.Visit;
+import org.klukov.example.clinic.domain.visit.model.VisitStatus;
 import org.klukov.example.clinic.domain.visit.in.AvailableVisitQuery;
 import org.klukov.example.clinic.domain.visit.in.AvailableVisitsUseCase;
 import org.klukov.example.clinic.utils.DateTimeUtils;

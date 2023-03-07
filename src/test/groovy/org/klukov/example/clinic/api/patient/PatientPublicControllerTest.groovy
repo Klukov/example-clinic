@@ -1,8 +1,8 @@
 package org.klukov.example.clinic.api.patient
 
 import org.klukov.example.clinic.DataGenerator
-import org.klukov.example.clinic.domain.visit.Patient
-import org.klukov.example.clinic.domain.visit.VisitId
+import org.klukov.example.clinic.domain.visit.model.Patient
+import org.klukov.example.clinic.domain.visit.model.VisitId
 import org.klukov.example.clinic.domain.visit.out.PatientRepository
 import org.klukov.example.clinic.domain.visit.out.VisitRepository
 import org.springframework.beans.factory.annotation.Autowired

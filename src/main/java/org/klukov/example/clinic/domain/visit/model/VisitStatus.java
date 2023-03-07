@@ -1,4 +1,4 @@
-package org.klukov.example.clinic.domain.visit;
+package org.klukov.example.clinic.domain.visit.model;
 
 import java.util.Set;
 

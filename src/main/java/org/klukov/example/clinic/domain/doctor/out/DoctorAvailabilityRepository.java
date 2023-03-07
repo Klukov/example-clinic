@@ -1,6 +1,6 @@
 package org.klukov.example.clinic.domain.doctor.out;
 
-import org.klukov.example.clinic.domain.doctor.DoctorId;
+import org.klukov.example.clinic.domain.doctor.model.DoctorId;
 
 import java.time.LocalDateTime;
 import java.util.Set;

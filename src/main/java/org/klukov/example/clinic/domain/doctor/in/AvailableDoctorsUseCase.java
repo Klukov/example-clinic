@@ -1,6 +1,6 @@
 package org.klukov.example.clinic.domain.doctor.in;
 
-import org.klukov.example.clinic.domain.doctor.Doctor;
+import org.klukov.example.clinic.domain.doctor.model.Doctor;
 
 import java.util.Set;
 

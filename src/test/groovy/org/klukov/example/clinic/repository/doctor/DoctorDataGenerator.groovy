@@ -1,7 +1,7 @@
 package org.klukov.example.clinic.repository.doctor
 
-import org.klukov.example.clinic.domain.doctor.Doctor
-import org.klukov.example.clinic.domain.doctor.DoctorSpecialization
+import org.klukov.example.clinic.domain.doctor.model.Doctor
+import org.klukov.example.clinic.domain.doctor.model.DoctorSpecialization
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

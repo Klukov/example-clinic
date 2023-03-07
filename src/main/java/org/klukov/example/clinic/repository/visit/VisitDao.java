@@ -5,11 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.klukov.example.clinic.domain.doctor.DoctorId;
-import org.klukov.example.clinic.domain.visit.PatientId;
-import org.klukov.example.clinic.domain.visit.Visit;
-import org.klukov.example.clinic.domain.visit.VisitId;
-import org.klukov.example.clinic.domain.visit.VisitStatus;
+import org.klukov.example.clinic.domain.doctor.model.DoctorId;
+import org.klukov.example.clinic.domain.visit.model.PatientId;
+import org.klukov.example.clinic.domain.visit.model.Visit;
+import org.klukov.example.clinic.domain.visit.model.VisitId;
+import org.klukov.example.clinic.domain.visit.model.VisitStatus;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.Entity;

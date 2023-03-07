@@ -5,9 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.klukov.example.clinic.domain.visit.NewPatient;
-import org.klukov.example.clinic.domain.visit.Patient;
-import org.klukov.example.clinic.domain.visit.PatientId;
+import org.klukov.example.clinic.domain.visit.model.NewPatient;
+import org.klukov.example.clinic.domain.visit.model.Patient;
+import org.klukov.example.clinic.domain.visit.model.PatientId;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

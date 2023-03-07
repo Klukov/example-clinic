@@ -1,7 +1,7 @@
 package org.klukov.example.clinic.api.doctor
 
 import org.klukov.example.clinic.DataGenerator
-import org.klukov.example.clinic.domain.visit.Visit
+import org.klukov.example.clinic.domain.visit.model.Visit
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest

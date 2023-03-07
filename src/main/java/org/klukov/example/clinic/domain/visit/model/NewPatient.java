@@ -1,4 +1,4 @@
-package org.klukov.example.clinic.domain.doctor;
+package org.klukov.example.clinic.domain.visit.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,15 +6,11 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
-import java.math.BigDecimal;
-
 @Value
-@Builder(toBuilder = true)
+@Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Doctor {
-    Long id;
+public class NewPatient {
     @NonNull String firstName;
     @NonNull String lastName;
-    @NonNull DoctorSpecialization specialization;
-    BigDecimal rating;
+    @NonNull String peselNumber;
 }

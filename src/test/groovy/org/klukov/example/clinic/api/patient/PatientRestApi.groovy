@@ -3,7 +3,7 @@ package org.klukov.example.clinic.api.patient
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.util.logging.Slf4j
-import org.klukov.example.clinic.domain.doctor.DoctorSpecialization
+import org.klukov.example.clinic.domain.doctor.model.DoctorSpecialization
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component

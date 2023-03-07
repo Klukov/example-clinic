@@ -4,8 +4,8 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
-import org.klukov.example.clinic.domain.doctor.Doctor;
-import org.klukov.example.clinic.domain.doctor.DoctorSpecialization;
+import org.klukov.example.clinic.domain.doctor.model.Doctor;
+import org.klukov.example.clinic.domain.doctor.model.DoctorSpecialization;
 
 @Value
 @Builder
