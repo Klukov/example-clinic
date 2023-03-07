@@ -52,7 +52,9 @@ spotless {
     }
     groovy {
         importOrder()
-        //greclipse()
+        indentWithSpaces()
+        endWithNewline()
+        trimTrailingWhitespace()
         excludeJava()
     }
     sql {
