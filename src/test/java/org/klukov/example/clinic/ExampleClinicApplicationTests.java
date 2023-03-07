@@ -11,7 +11,5 @@ import org.springframework.test.context.ActiveProfiles;
 class ExampleClinicApplicationTests {
 
     @Test
-    void contextLoads() {
-    }
-
+    void contextLoads() {}
 }

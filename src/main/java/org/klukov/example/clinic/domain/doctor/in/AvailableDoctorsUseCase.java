@@ -1,8 +1,7 @@
 package org.klukov.example.clinic.domain.doctor.in;
 
-import org.klukov.example.clinic.domain.doctor.model.Doctor;
-
 import java.util.Set;
+import org.klukov.example.clinic.domain.doctor.model.Doctor;
 
 public interface AvailableDoctorsUseCase {
 

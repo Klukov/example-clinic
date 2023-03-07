@@ -1,10 +1,9 @@
 package org.klukov.example.clinic.utils;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DateTimeUtils {

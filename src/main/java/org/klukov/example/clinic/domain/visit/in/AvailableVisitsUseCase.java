@@ -1,8 +1,7 @@
 package org.klukov.example.clinic.domain.visit.in;
 
-import org.klukov.example.clinic.domain.visit.model.Visit;
-
 import java.util.List;
+import org.klukov.example.clinic.domain.visit.model.Visit;
 
 public interface AvailableVisitsUseCase {
 

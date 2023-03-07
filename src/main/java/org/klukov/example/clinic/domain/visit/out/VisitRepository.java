@@ -1,11 +1,10 @@
 package org.klukov.example.clinic.domain.visit.out;
 
-import org.klukov.example.clinic.domain.visit.model.Visit;
-import org.klukov.example.clinic.domain.visit.model.VisitId;
-import org.klukov.example.clinic.domain.visit.in.AvailableVisitQuery;
-
 import java.util.List;
 import java.util.Optional;
+import org.klukov.example.clinic.domain.visit.in.AvailableVisitQuery;
+import org.klukov.example.clinic.domain.visit.model.Visit;
+import org.klukov.example.clinic.domain.visit.model.VisitId;
 
 public interface VisitRepository {
 

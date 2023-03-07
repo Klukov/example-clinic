@@ -1,11 +1,10 @@
 package org.klukov.example.clinic.repository.visit
 
+import java.time.LocalDateTime
 import org.klukov.example.clinic.domain.visit.model.Visit
 import org.klukov.example.clinic.domain.visit.model.VisitStatus
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-
-import java.time.LocalDateTime
 
 @Component
 class VisitDataGenerator {

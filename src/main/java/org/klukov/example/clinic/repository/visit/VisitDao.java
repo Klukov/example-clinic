@@ -1,5 +1,13 @@
 package org.klukov.example.clinic.repository.visit;
 
+import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,15 +19,6 @@ import org.klukov.example.clinic.domain.visit.model.Visit;
 import org.klukov.example.clinic.domain.visit.model.VisitId;
 import org.klukov.example.clinic.domain.visit.model.VisitStatus;
 import org.springframework.lang.NonNull;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -37,25 +36,23 @@ class VisitDao {
     private Long doctorId;
     private Long patientId;
 
-    @NonNull
-    private LocalDateTime timeFrom;
+    @NonNull private LocalDateTime timeFrom;
 
-    @NonNull
-    private LocalDateTime timeTo;
+    @NonNull private LocalDateTime timeTo;
 
-    @NonNull
-    @Enumerated(EnumType.STRING)
+    @NonNull @Enumerated(EnumType.STRING)
     private VisitStatus status;
 
     private String patientRemarks;
 
     public static VisitDao fromDomain(Visit visit) {
-        var builder = VisitDao.builder()
-                .doctorId(visit.getDoctorId().getValue())
-                .timeFrom(visit.getFrom())
-                .timeTo(visit.getTo())
-                .status(visit.getStatus())
-                .patientRemarks(visit.getPatientRemarks());
+        var builder =
+                VisitDao.builder()
+                        .doctorId(visit.getDoctorId().getValue())
+                        .timeFrom(visit.getFrom())
+                        .timeTo(visit.getTo())
+                        .status(visit.getStatus())
+                        .patientRemarks(visit.getPatientRemarks());
         if (visit.getPatientId().isPresent()) {
             builder.patientId(visit.getPatientId().get().getValue());
         }

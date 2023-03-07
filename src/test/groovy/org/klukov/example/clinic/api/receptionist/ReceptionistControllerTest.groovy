@@ -1,6 +1,8 @@
 package org.klukov.example.clinic.api.receptionist
 
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+
 import org.klukov.example.clinic.DataGenerator
 import org.klukov.example.clinic.domain.visit.model.VisitId
 import org.klukov.example.clinic.domain.visit.model.VisitStatus
@@ -13,8 +15,6 @@ import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.testcontainers.spock.Testcontainers
 import spock.lang.Specification
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @ActiveProfiles("test-containers")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)

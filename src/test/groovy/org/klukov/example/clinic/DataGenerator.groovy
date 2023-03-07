@@ -1,5 +1,7 @@
 package org.klukov.example.clinic
 
+import static org.klukov.example.clinic.TestSettings.now
+
 import org.klukov.example.clinic.domain.doctor.model.Doctor
 import org.klukov.example.clinic.domain.visit.model.Patient
 import org.klukov.example.clinic.domain.visit.model.Visit
@@ -10,8 +12,6 @@ import org.klukov.example.clinic.repository.visit.VisitDataGenerator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-
-import static org.klukov.example.clinic.TestSettings.now
 
 @Component
 class DataGenerator {

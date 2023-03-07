@@ -1,11 +1,10 @@
 package org.klukov.example.clinic.api.patient;
 
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 import org.klukov.example.clinic.domain.visit.model.Visit;
-
-import java.time.LocalDateTime;
 
 @Value
 @Builder

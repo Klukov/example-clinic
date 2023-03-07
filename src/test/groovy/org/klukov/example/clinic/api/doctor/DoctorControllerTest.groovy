@@ -1,5 +1,7 @@
 package org.klukov.example.clinic.api.doctor
 
+import java.time.LocalDate
+import java.time.LocalDateTime
 import org.klukov.example.clinic.DataGenerator
 import org.klukov.example.clinic.domain.visit.model.Visit
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,9 +11,6 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.web.WebAppConfiguration
 import org.testcontainers.spock.Testcontainers
 import spock.lang.Specification
-
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 @ActiveProfiles("test-containers")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
