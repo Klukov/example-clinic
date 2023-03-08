@@ -2,7 +2,9 @@
 
 ALL ENDPOINTS ARE DESCRIBED IN [USE-CASES.md](USE-CASES.md) FILE
 
-## REFACTORS:
+HOW TO RUN THE PROJECT IN [QUICK-START.md](QUICK-START.md) FILE
+
+## Refactors:
 
 1. ~~INITIAL VERSION~~ ([branch v0](https://github.com/Klukov/example-clinic/tree/v0-initialVersion))- application is
    split
@@ -17,13 +19,6 @@ ALL ENDPOINTS ARE DESCRIBED IN [USE-CASES.md](USE-CASES.md) FILE
 4. SEPARATED READ MODEL - todo
 5. FULL HEXAGON - todo
 
-## RUN APP LOCALLY:
-
-**POSTGRES:** <br />
-* create docker:  
-  `sudo docker run --name clinic-postgresql -e POSTGRES_DB=example-clinic -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test123 -p 5432:5432 -d postgres:13.7`
-* run psql in docker:  
-  `docker exec -ti clinic-postgresql psql -U test -d example-clinic`
 
 ## Functional next steps:
 
