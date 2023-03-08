@@ -3,7 +3,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
     id 'groovy'
-    id 'com.diffplug.spotless' version "6.16.0"
+    id 'pmd'
+    id 'com.diffplug.spotless' version '6.16.0'
 }
 
 group = 'org.klukov.example'
@@ -61,4 +62,8 @@ spotless {
         target 'src/main/resources/**/*.sql'
         dbeaver()
     }
+}
+
+pmd {
+    ignoreFailures = false
 }
