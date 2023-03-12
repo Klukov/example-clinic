@@ -46,6 +46,7 @@ class VisitService implements BookVisitUseCase, ConfirmVisitUseCase, AvailableVi
                                 .firstName(bookVisitCommand.getPatient().getFirstName())
                                 .lastName(bookVisitCommand.getPatient().getLastName())
                                 .peselNumber(bookVisitCommand.getPatient().getPeselNumber())
+                                .phone(bookVisitCommand.getPatient().getPhone())
                                 .build());
         var newVisit =
                 visitBuilder

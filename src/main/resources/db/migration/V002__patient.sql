@@ -5,5 +5,6 @@ CREATE
             first_name VARCHAR(255) NOT NULL,
             last_name VARCHAR(255) NOT NULL,
             pesel_number VARCHAR(11) NOT NULL,
+            phone VARCHAR(9) NOT NULL,
             CONSTRAINT patient_pkey PRIMARY KEY(id)
         );

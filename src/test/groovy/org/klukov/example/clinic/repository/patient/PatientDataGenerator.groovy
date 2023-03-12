@@ -14,12 +14,13 @@ class PatientDataGenerator {
         patientJpaRepository.deleteAll()
     }
 
-    Patient generatePatient(String firstName, String lastName, String peselNumber) {
+    Patient generatePatient(String firstName, String lastName, String peselNumber, String phone) {
         patientJpaRepository.save(
                 new PatientDao(
                         firstName: firstName,
                         lastName: lastName,
                         peselNumber: peselNumber,
+                        phone: phone,
                 )
         ).toDomain()
     }

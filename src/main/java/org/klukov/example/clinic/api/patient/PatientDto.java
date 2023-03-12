@@ -15,6 +15,11 @@ class PatientDto {
 
     @NotEmpty String lastName;
 
+    @NotEmpty
     @Size(min = 11, max = 11)
     String peselNumber;
+
+    @NotEmpty
+    @Size(min = 9, max = 9)
+    String phone;
 }

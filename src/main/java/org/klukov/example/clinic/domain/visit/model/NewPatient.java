@@ -13,4 +13,5 @@ public class NewPatient {
     @NonNull String firstName;
     @NonNull String lastName;
     @NonNull String peselNumber;
+    @NonNull String phone;
 }

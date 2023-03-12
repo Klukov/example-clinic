@@ -78,14 +78,14 @@ class DataGenerator {
 
     private List<Patient> generatePatients() {
         [
-                patientDataGenerator.generatePatient("Aaaa", "Bbbbb", "11111111111"),
-                patientDataGenerator.generatePatient("Cccc", "Ddddd", "22222222222"),
-                patientDataGenerator.generatePatient("Eeee", "Fffff", "33333333333"),
-                patientDataGenerator.generatePatient("Gggg", "Hhhhh", "44444444444"),
-                patientDataGenerator.generatePatient("Iiii", "Jjjjj", "55555555555"),
-                patientDataGenerator.generatePatient("Kkkk", "Lllll", "66666666666"),
-                patientDataGenerator.generatePatient("Mmmm", "Nnnnn", "77777777777"),
-                patientDataGenerator.generatePatient("Oooo", "Ppppp", "88888888888"),
+                patientDataGenerator.generatePatient("Aaaa", "Bbbbb", "11111111111", "111111111"),
+                patientDataGenerator.generatePatient("Cccc", "Ddddd", "22222222222", "222222222"),
+                patientDataGenerator.generatePatient("Eeee", "Fffff", "33333333333", "333333333"),
+                patientDataGenerator.generatePatient("Gggg", "Hhhhh", "44444444444", "444444444"),
+                patientDataGenerator.generatePatient("Iiii", "Jjjjj", "55555555555", "555555555"),
+                patientDataGenerator.generatePatient("Kkkk", "Lllll", "66666666666", "666666666"),
+                patientDataGenerator.generatePatient("Mmmm", "Nnnnn", "77777777777", "777777777"),
+                patientDataGenerator.generatePatient("Oooo", "Ppppp", "88888888888", "888888888"),
         ]
     }
 

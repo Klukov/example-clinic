@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.ResultActions
 
 @Component
 @Slf4j
@@ -23,12 +24,16 @@ class PatientRestApi {
     @Autowired
     ObjectMapper objectMapper
 
-    PatientVisitDto bookVisitCommand(Long visitId, BookVisitDto bookVisitDto) {
-        def mockResponse = mockMvc.perform(
+    ResultActions callBookVisitCommand(Long visitId, BookVisitDto bookVisitDto) {
+        mockMvc.perform(
                 post("/public/v1/visit/$visitId/book")
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(bookVisitDto)))
+    }
+
+    PatientVisitDto bookVisitCommand(Long visitId, BookVisitDto bookVisitDto) {
+        def mockResponse = callBookVisitCommand(visitId, bookVisitDto)
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()

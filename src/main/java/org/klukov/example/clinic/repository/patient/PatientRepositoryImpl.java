@@ -15,6 +15,10 @@ class PatientRepositoryImpl implements PatientRepository {
 
     private final PatientJpaRepository patientJpaRepository;
 
+    private static ClinicRuntimeException getPatientNotFoundException(Patient patient) {
+        return new ClinicRuntimeException(String.format("Patient not found: %s", patient.getId()));
+    }
+
     @Override
     public Optional<Patient> findById(PatientId patientId) {
         return patientJpaRepository.findById(patientId.getValue()).map(PatientDao::toDomain);
@@ -29,11 +33,7 @@ class PatientRepositoryImpl implements PatientRepository {
                         .filter(Optional::isPresent)
                         .map(Optional::get)
                         .map(PatientDao::toBuilder)
-                        .orElseThrow(
-                                () ->
-                                        new ClinicRuntimeException(
-                                                String.format(
-                                                        "Patient not found: %s", patient.getId())))
+                        .orElseThrow(() -> getPatientNotFoundException(patient))
                         .peselNumber(patient.getPeselNumber())
                         .firstName(patient.getFirstName())
                         .lastName(patient.getLastName())

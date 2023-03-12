@@ -22,5 +22,6 @@ public class BookVisitCommand {
         @NonNull String firstName;
         @NonNull String lastName;
         @NonNull String peselNumber;
+        @NonNull String phone;
     }
 }

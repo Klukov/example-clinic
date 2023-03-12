@@ -1,5 +1,7 @@
 package org.klukov.example.clinic.api.patient
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+
 import org.klukov.example.clinic.DataGenerator
 import org.klukov.example.clinic.domain.visit.model.Patient
 import org.klukov.example.clinic.domain.visit.model.VisitId
@@ -89,7 +91,7 @@ class PatientPublicControllerTest extends Specification {
                 .get()
     }
 
-    def "should visit be booked, when patient register"() {
+    def "should visit be booked, when patient send register request"() {
         when:
         def doctors = visitRestApi.queryDoctors(queryFrom, queryTo)
         def doctorId = findDoctorId(doctors, queriedDoctorName[0], queriedDoctorName[1])
@@ -110,20 +112,53 @@ class PatientPublicControllerTest extends Specification {
         "2022-02-05T13:00" | "2022-02-05T14:00" | ["Grazyna", "Macz"] || _
     }
 
-    private BookVisitDto prepareSamplePatientRequest() {
+    def "should throw exception when payload for visit booking is invalid, field #invalidField"() {
+        given:
+        def queryFrom = "2022-02-05T13:00"
+        def queryTo = "2022-02-05T14:00"
+        def doctors = visitRestApi.queryDoctors(queryFrom, queryTo)
+        def doctorId = findDoctorId(doctors, "Grazyna", "Macz")
+        def visitId = visitRestApi.queryVisits(queryFrom, queryTo, doctorId)[0].id
+        def bookVisitRequest = generateBookVisitRequest(firstName, lastName, peselNumber, phone)
+
+        when:
+        def result = visitRestApi.callBookVisitCommand(visitId, bookVisitRequest)
+
+        then:
+        result.andExpect(status().isBadRequest())
+
+        where:
+        invalidField  | firstName | lastName | peselNumber    | phone        || _
+        "firstName"   | null      | "Last"   | "12345678910"  | "123456789"  || _
+        "lastName"    | "First"   | null     | "12345678910"  | "123456789"  || _
+        "peselNumber" | "First"   | "Last"   | null           | "123456789"  || _
+        "peselNumber" | "First"   | "Last"   | "1234567891"   | "123456789"  || _ // too short
+        "peselNumber" | "First"   | "Last"   | "123456789101" | "123456789"  || _ // too long
+        "phone"       | "First"   | "Last"   | "12345678910"  | null         || _
+        "phone"       | "First"   | "Last"   | "12345678910"  | "12345678"   || _ // to short
+        "phone"       | "First"   | "Last"   | "12345678910"  | "1234567891" || _ // to long
+    }
+
+    private BookVisitDto generateBookVisitRequest(String firstName, String lastName, String peselNumber, String phone) {
         BookVisitDto.builder()
                 .patient(PatientDto.builder()
-                        .firstName("Ksionze")
-                        .lastName("Kebaba")
-                        .peselNumber("12345678910")
+                        .firstName(firstName)
+                        .lastName(lastName)
+                        .peselNumber(peselNumber)
+                        .phone(phone)
                         .build())
                 .remarks("Nothing to add")
                 .build()
+    }
+
+    private BookVisitDto prepareSamplePatientRequest() {
+        generateBookVisitRequest("Ksionze", "Kebaba", "12345678910", "123456789")
     }
 
     void assertPatientData(Patient patient, PatientDto patientDto) {
         assert patient.firstName == patientDto.firstName
         assert patient.lastName == patientDto.lastName
         assert patient.peselNumber == patientDto.peselNumber
+        assert patient.phone == patientDto.phone
     }
 }

@@ -4,12 +4,12 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME
 
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.klukov.example.clinic.domain.doctor.model.DoctorSpecialization;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +44,7 @@ class PatientPublicController {
     @PostMapping("{id}/book")
     public PatientVisitDto bookVisit(
             @PathVariable("id") @NotNull @Min(0) Long visitId,
-            @Validated @RequestBody BookVisitDto bookVisitDto) {
+            @Valid @RequestBody BookVisitDto bookVisitDto) {
         return patientPublicApi.bookVisit(visitId, bookVisitDto);
     }
 }

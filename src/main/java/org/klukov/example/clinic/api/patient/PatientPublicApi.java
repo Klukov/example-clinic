@@ -67,14 +67,18 @@ class PatientPublicApi {
         var bookVisitCommand =
                 BookVisitCommand.builder()
                         .visitId(VisitId.of(visitId))
-                        .patient(
-                                BookVisitCommand.Patient.builder()
-                                        .firstName(bookVisitDto.getPatient().getFirstName())
-                                        .lastName(bookVisitDto.getPatient().getLastName())
-                                        .peselNumber(bookVisitDto.getPatient().getPeselNumber())
-                                        .build())
+                        .patient(buildPatient(bookVisitDto.getPatient()))
                         .patientRemarks(bookVisitDto.getRemarks())
                         .build();
         return PatientVisitDto.fromDomain(bookVisitUseCase.bookVisit(bookVisitCommand));
+    }
+
+    private BookVisitCommand.Patient buildPatient(PatientDto patientDto) {
+        return BookVisitCommand.Patient.builder()
+                .firstName(patientDto.getFirstName())
+                .lastName(patientDto.getLastName())
+                .peselNumber(patientDto.getPeselNumber())
+                .phone(patientDto.getPhone())
+                .build();
     }
 }
