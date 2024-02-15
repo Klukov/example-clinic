@@ -1,6 +1,6 @@
 package org.klukov.example.clinic.api.receptionist;
 
-import javax.validation.constraints.Min;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
