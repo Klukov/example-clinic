@@ -1,10 +1,10 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.8'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.springframework.boot' version '3.2.1'
+    id 'io.spring.dependency-management' version '1.1.4'
     id 'java'
     id 'groovy'
     id 'pmd'
-    id 'com.diffplug.spotless' version '6.16.0'
+    id 'com.diffplug.spotless' version '6.23.3'
 }
 
 group = 'org.klukov.example'
@@ -25,18 +25,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.flywaydb:flyway-core:9.12.0'
-    runtimeOnly 'org.postgresql:postgresql:42.5.1'
+    implementation 'org.flywaydb:flyway-core:9.19.4'
+    //implementation 'org.flywaydb:flyway-core:10.7.2' // can be upgraded after postgres update
+    runtimeOnly 'org.postgresql:postgresql:42.7.1'
 
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.spockframework:spock-core:2.1-groovy-3.0'
-    testImplementation 'org.spockframework:spock-spring:2.1-groovy-3.0'
-    testImplementation 'org.codehaus.groovy:groovy:3.0.12'
-    testImplementation 'org.testcontainers:spock:1.17.6'
-    testImplementation 'org.testcontainers:postgresql:1.17.6'
+    testImplementation 'org.spockframework:spock-core:2.4-M1-groovy-3.0'
+    testImplementation 'org.spockframework:spock-spring:2.4-M1-groovy-3.0'
+    testImplementation 'org.codehaus.groovy:groovy:3.0.20'
+    testImplementation 'org.testcontainers:spock:1.19.5'
+    testImplementation 'org.testcontainers:postgresql:1.19.5'
 }
 
 tasks.named('test') {

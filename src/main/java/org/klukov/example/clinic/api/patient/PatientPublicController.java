@@ -2,11 +2,11 @@ package org.klukov.example.clinic.api.patient;
 
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.klukov.example.clinic.domain.doctor.model.DoctorSpecialization;
 import org.springframework.format.annotation.DateTimeFormat;

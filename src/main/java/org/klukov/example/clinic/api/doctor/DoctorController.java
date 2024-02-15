@@ -2,9 +2,9 @@ package org.klukov.example.clinic.api.doctor;
 
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
+import jakarta.validation.constraints.Min;
 import java.time.LocalDate;
 import java.util.List;
-import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
