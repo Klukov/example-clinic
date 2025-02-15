@@ -23,8 +23,7 @@ class DoctorController {
     public List<DoctorVisitDto> getMyVisits(
             @RequestParam("from") @DateTimeFormat(iso = DATE) LocalDate from,
             @RequestParam("to") @DateTimeFormat(iso = DATE) LocalDate to,
-            @RequestParam("my-id") @Min(0)
-                    long myId // todo: use authorization to retrieve doctor id
+            @RequestParam("my-id") @Min(0) long myId // todo: use authorization to retrieve doctor id
             ) {
         return doctorApi.findAllMyVisits(from, to, myId);
     }
