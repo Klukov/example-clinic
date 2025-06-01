@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: clinic
   jpa:
     generate-ddl: false
     database: POSTGRESQL
