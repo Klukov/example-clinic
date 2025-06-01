@@ -8,7 +8,7 @@ spring:
     generate-ddl: false
     database: POSTGRESQL
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 logging:
   level:
