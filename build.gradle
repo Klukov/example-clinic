@@ -1,10 +1,10 @@
 plugins {
-    id 'org.springframework.boot' version '3.4.6'
+    id 'org.springframework.boot' version '3.5.5'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
     id 'groovy'
     id 'pmd'
-    id 'com.diffplug.spotless' version '7.0.4'
+    id 'com.diffplug.spotless' version '7.2.1'
 }
 
 group = 'org.klukov.example'
@@ -25,7 +25,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     runtimeOnly 'org.flywaydb:flyway-database-postgresql:11.3.2'
-    runtimeOnly 'org.postgresql:postgresql:42.7.5'
+    runtimeOnly 'org.postgresql:postgresql:42.7.7'
 
     compileOnly 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
@@ -35,8 +35,8 @@ dependencies {
     testImplementation 'org.spockframework:spock-core:2.4-M6-groovy-3.0'
     testImplementation 'org.spockframework:spock-spring:2.4-M6-groovy-3.0'
     testImplementation 'org.codehaus.groovy:groovy:3.0.23'
-    testImplementation 'org.testcontainers:spock:1.21.1'
-    testImplementation 'org.testcontainers:postgresql:1.21.1'
+    testImplementation 'org.testcontainers:spock:1.21.3'
+    testImplementation 'org.testcontainers:postgresql:1.21.3'
 }
 
 tasks.named('test') {
